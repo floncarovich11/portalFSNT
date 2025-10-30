@@ -3,8 +3,8 @@
 -- =====================================================
 
 -- Criar banco de dados
-CREATE DATABASE IF NOT EXISTS sistema_chamados_ti;
-USE sistema_chamados_ti;
+CREATE DATABASE IF NOT EXISTS portalFSNT;
+USE portalFSNT;
 
 -- =====================================================
 -- TABELA: unidades
