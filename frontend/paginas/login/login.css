@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #398414 45%, #ffffff 45%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 35px 50px;
+    max-width: 400px;
+    width: 100%;
+    text-align: left;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px 0 rgba(34, 80, 11, 0.07);
+}
+
+.login-title {
+    color: #22500B;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: #22500B;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.form-group input {
+    width: 100%;
+    border: 1px solid #22500B;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border: 1.5px solid #398414;
+}
+
+.btn-entrar {
+    width: 100%;
+    padding: 8px;
+    background-color: #398414;
+    color: #fff;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+.btn-entrar:hover {
+    background-color: #2d6b10;
+}
+
+.links-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.link-redefinir {
+    display: block;
+    color: #398414;
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.link-redefinir:hover {
+    text-decoration: underline;
+}
+
+.criar-conta-text {
+    color: #555;
+    font-size: 0.85rem;
+}
+
+.link-criar-conta {
+    color: #398414;
+    font-size: 0.85rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-criar-conta:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 25px 30px;
+        max-width: 90%;
+    }
+}

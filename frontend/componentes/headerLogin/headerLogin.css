@@ -1,0 +1,254 @@
+:root {
+    --primary-color: #398414;
+    --hover-color: #4a9c1a;
+    --text-color: #ffffff;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    position: fixed;
+}
+
+.containers {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.logo i {
+    font-size: 3rem;
+    color: white;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.logo a:hover i {
+    transform: rotate(360deg);
+    color: #e0e0e0;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #c8e6c9;
+}
+
+.auth-links-desktop, .auth-links-mobile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.auth-links-mobile {
+    display: none;
+}
+
+.auth-links-desktop a,
+.auth-links-desktop i {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.auth-links-desktop i {
+    font-size: 1.8rem;
+}
+
+.auth-links-desktop a:hover,
+.auth-links-desktop a:hover i {
+    color: #c8e6c9;
+    transform: scale(1.1);
+}
+
+.bem-vindo {
+    color: white;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+#login {
+    padding: 10px 24px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    color: var(--primary-color);
+    background-color: white;
+    font-weight: 600;
+}
+
+.login {
+    padding: 10px 24px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    color: var(--primary-color);
+    background-color: white;
+    font-weight: 600;
+}
+
+#login:hover,
+.login:hover {
+    background-color: #c8e6c9;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.icons-mobile {
+    display: none;
+}
+
+@media screen and (max-width: 1030px) {
+    .icons-mobile {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .auth-links-desktop {
+        display: none;
+    }
+
+    header {
+        padding: 12px 20px;
+    }
+
+    .nav-divider {
+        width: 90%;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.3);
+        margin: 10px 0;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 60%;
+        height: 100%;
+        background-color: var(--primary-color);
+        padding-top: 60px;
+        transition: right 0.3s ease-in-out;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+
+    nav a {
+        margin: 10px 0;
+        font-size: 18px;
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .auth-links-mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: 3vh;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .auth-links-mobile a {
+        width: 80%;
+        text-align: center;
+    }
+
+    .auth-links-mobile i {
+        color: white;
+        font-size: 1.8rem;
+    }
+
+    #login,
+    .login {
+        width: 80%;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    .logo i {
+        font-size: 1.8rem;
+    }
+
+    .bem-vindo {
+        font-size: 0.95rem;
+    }
+}
+
+@media screen and (max-width: 655px) {
+    .nav-menu {
+        width: 75%;
+    }
+
+    header {
+        padding: 10px 15px;
+    }
+    
+    .logo i {
+        font-size: 1.6rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .nav-menu {
+        width: 85%;
+    }
+}
+
+header .logo img {
+    width: 50px; /* tamanho reduzido */
+    height: auto;
+    display: block;
+}
+
+/* opcional: diminuir um pouco mais em telas menores */
+@media (max-width: 480px) {
+    header .logo img {
+        width: 25px;
+    }
+}

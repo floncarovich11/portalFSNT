@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal FSNT - Cadastro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="cadastro.css">
+</head>
+<body>
+    <header-login></header-login>
+
+    <main>
+        <div class="cadastro-container">
+            <a href="../login/login.html" class="voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar
+            </a>
+
+            <h1 class="cadastro-title">Portal FSNT</h1>
+
+            <form id="cadastroForm">
+                <div class="form-group">
+                    <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="unidade" name="unidade" placeholder="Unidade" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Endereço de email" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="senha" name="senha" placeholder="Senha" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirmar senha" required>
+                </div>
+
+                <button type="submit" class="btn-cadastrar">Cadastrar</button>
+            </form>
+
+            <div class="links-container">
+                <p class="login-text">Já tem uma conta?</p>
+                <a href="../login/login.html" class="link-login">Entrar</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="/frontend/componentes/headerLogin/headerLogin.js"></script>
+    <script src="cadastro.js"></script>
+</body>
+</html>
