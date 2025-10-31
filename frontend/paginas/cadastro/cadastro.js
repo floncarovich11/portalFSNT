@@ -2,7 +2,7 @@ document.getElementById('cadastroForm').addEventListener('submit', async (e) => 
     e.preventDefault();
 
     const nome = document.getElementById('nome').value.trim();
-    const unidade = document.getElementById('unidade').value.trim();
+    const unidade = document.getElementById('unidade').value; // agora vem do select (1..4)
     const email = document.getElementById('email').value.trim();
     const senha = document.getElementById('senha').value;
     const confirmarSenha = document.getElementById('confirmarSenha').value;
@@ -18,20 +18,29 @@ document.getElementById('cadastroForm').addEventListener('submit', async (e) => 
         return;
     }
 
+    // validar unidade selecionada
+    if (!['1','2','3','4'].includes(unidade)) {
+        alert('Selecione uma unidade válida.');
+        return;
+    }
+    
     try {
-        const response = await fetch('/cadastro', {
+        // chamar endpoint do backend
+        const response = await fetch('http://localhost:3000/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nome, unidade, email, senha })
+            // enviar nome_completo e id_unidade (ou unidade como string; backend resolve)
+            body: JSON.stringify({ nome: nome, unidade: Number(unidade), email, senha })
         });
 
         const data = await response.json();
 
         if (response.ok) {
             alert('Cadastro realizado com sucesso!');
-            window.location.href = '/login';
+            // redirecionar para página de login local (arquivo estático)
+            window.location.href = '../login/login.html';
         } else {
             alert(data.message || 'Erro ao cadastrar. Tente novamente.');
         }
@@ -40,3 +49,5 @@ document.getElementById('cadastroForm').addEventListener('submit', async (e) => 
         alert('Erro ao conectar com o servidor.');
     }
 });
+
+// Nenhuma mudança de style; preservado como está

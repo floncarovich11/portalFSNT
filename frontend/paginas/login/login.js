@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const senha = document.getElementById('senha').value;
 
     try {
-        const response = await fetch('/login', {
+        const response = await fetch('http://localhost:3000/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -16,7 +16,11 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const data = await response.json();
 
         if (response.ok) {
-            localStorage.setItem('token', data.token);
+            // backend retorna { message, usuario: { ... } }
+            if (data.usuario) {
+                localStorage.setItem('usuario', JSON.stringify(data.usuario));
+            }
+            // redirecionar para a página inicial do frontend (ajuste se necessário)
             window.location.href = '/inicio';
         } else {
             alert(data.message || 'Erro ao fazer login');
