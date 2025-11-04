@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal FSNT - Abrir Ticket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="abrirTicket.css">
+</head>
+<body>
+    <header-component></header-component>
+
+    <main>
+        <div class="ticket-container">
+            <h2>Portal FSNT</h2>
+            <h3>Abrir ticket</h3>
+        
+            <label for="unidade">Unidade*</label>
+            <select id="unidade">
+                <option value="">Selecione...</option>
+                <option value="matriz">Matriz</option>
+                <option value="filial1">Filial 1</option>
+                <option value="filial2">Filial 2</option>
+            </select>
+
+            <label for="solicitacao">Solicitação*</label>
+            <select id="solicitacao">
+                <option value="">Selecione...</option>
+                <option value="acesso">Problema de acesso</option>
+                <option value="sistema">Erro no sistema</option>
+                <option value="outros">Outros</option>
+            </select>
+
+            <label for="resumo">Resumo da solicitação*</label>
+            <input type="text" id="resumo" placeholder="Ex: Sistema não carrega a tela de login">
+
+            <label for="descricao">Descreva a solicitação</label>
+            <textarea id="descricao" placeholder="Detalhe aqui o que está acontecendo..."></textarea>
+
+            <div class="file-upload">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Anexe um arquivo para análise</span>
+            </div>
+
+            <div class="buttons">
+                <button class="enviar">Enviar</button>
+                <button class="cancelar">Cancelar</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="/frontend/componentes/header/header.js"></script>
+    <script src="abrirTicket.js"></script>
+</body>
+</html>

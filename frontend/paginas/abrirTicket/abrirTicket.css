@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    color: #398414;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 220px; /* espaçamento ajustado para o header não cobrir nada */
+    padding-bottom: 60px;
+}
+
+/* container do formulário */
+.ticket-container {
+    width: 80%;
+    max-width: 850px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start; /* alinha tudo à esquerda */
+}
+
+.ticket-container h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #398414;
+    margin-bottom: -4px;
+}
+
+.ticket-container h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #398414;
+    margin-bottom: 12px;
+}
+
+.ticket-container label {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.ticket-container select,
+.ticket-container input,
+.ticket-container textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #398414;
+    border-radius: 4px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.ticket-container select:focus,
+.ticket-container input:focus,
+.ticket-container textarea:focus {
+    border-color: #2d6810;
+}
+
+.ticket-container textarea {
+    resize: none;
+    height: 100px;
+}
+
+.file-upload {
+    border: 1px dashed #398414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #398414;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.file-upload:hover {
+    background-color: rgba(57, 132, 20, 0.05);
+}
+
+.file-upload i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.buttons button {
+    border: none;
+    padding: 8px 18px;
+    font-size: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.buttons .enviar {
+    background-color: #398414;
+    color: #fff;
+}
+
+.buttons .enviar:hover {
+    background-color: #2d6810;
+}
+
+.buttons .cancelar {
+    background-color: transparent;
+    border: 1px solid #398414;
+    color: #398414;
+}
+
+.buttons .cancelar:hover {
+    background-color: #398414;
+    color: #fff;
+}

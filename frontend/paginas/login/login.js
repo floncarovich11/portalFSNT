@@ -21,7 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
                 localStorage.setItem('usuario', JSON.stringify(data.usuario));
             }
             // redirecionar para a página inicial do frontend (ajuste se necessário)
-            window.location.href = '/inicio';
+            window.location.href = './../abrirTicket/abrirTicket.html';
         } else {
             alert(data.message || 'Erro ao fazer login');
         }
