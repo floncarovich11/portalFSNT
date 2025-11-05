@@ -80,10 +80,10 @@ class Header extends HTMLElement {
                 <div class='paginas'>
                     <nav class="nav-menu">
                         <div class="nav-item">
-                            <a href="/abrir-ticket" data-page="abrir-ticket">Abrir ticket</a>
+                            <a href="../abrirTicket/abrirTicket.html" data-page="abrir-ticket">Abrir ticket</a>
                         </div>
                         <div class="nav-item">
-                            <a href="/meus-tickets" data-page="meus-tickets">Meus tickets</a>
+                            <a href="../meusTickets/meusTickets.html" data-page="meus-tickets">Meus tickets</a>
                         </div>
                         <div class="nav-item">
                             <a href="/ajuda" data-page="ajuda">Ajuda</a>
