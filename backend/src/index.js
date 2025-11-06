@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const ticketRoutes = require('./routes/tickets');
+const unidadesRoutes = require('./routes/unidades'); // NOVA LINHA
 
 app.use(express.json());
 app.use(cors({
@@ -29,3 +30,4 @@ db.connect((err) => {
 
 app.use('/auth', authRoutes);
 app.use('/tickets', ticketRoutes);
+app.use('/unidades', unidadesRoutes);

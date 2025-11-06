@@ -36,8 +36,65 @@
             </div>
         </div>
     </main>
-
+    
     <script src="/frontend/componentes/headerLogin/headerLogin.js"></script>
+
+    <!-- Fallback local leve para Swal (evita CDN falhando) -->
+    <script>
+    (function(){
+        if (window.Swal) return;
+        const css = `
+        .mini-swal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:9999}
+        .mini-swal-box{background:#fff;color:#222;max-width:420px;width:90%;border-radius:10px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);font-family:Arial,Helvetica,sans-serif}
+        .mini-swal-title{font-size:18px;font-weight:600;margin-bottom:8px}
+        .mini-swal-text{font-size:14px;margin-bottom:16px;white-space:pre-wrap}
+        .mini-swal-buttons{display:flex;justify-content:flex-end;gap:8px}
+        .mini-swal-btn{padding:8px 14px;border-radius:6px;border:0;cursor:pointer;font-weight:600}
+        .mini-swal-confirm{background:#398414;color:#fff}
+        .mini-swal-cancel{background:#e0e0e0;color:#333}
+        `;
+        const s = document.createElement('style'); s.appendChild(document.createTextNode(css)); document.head.appendChild(s);
+
+        window.Swal = {
+            fire: function(options){
+                return new Promise((resolve) => {
+                    const overlay = document.createElement('div');
+                    overlay.className = 'mini-swal-overlay';
+                    const box = document.createElement('div');
+                    box.className = 'mini-swal-box';
+                    const title = options.title ? `<div class="mini-swal-title">${options.title}</div>` : '';
+                    const text = options.text ? `<div class="mini-swal-text">${options.text}</div>` : '';
+                    const showCancel = !!options.showCancelButton;
+                    const confirmText = options.confirmButtonText || 'OK';
+                    const cancelText = options.cancelButtonText || 'Cancelar';
+                    const confirmColor = options.confirmButtonColor || '#398414';
+
+                    const buttonsHtml = `
+                        <div class="mini-swal-buttons">
+                            <button class="mini-swal-btn mini-swal-cancel" ${showCancel ? '' : 'style="display:none"'}>${cancelText}</button>
+                            <button class="mini-swal-btn mini-swal-confirm" style="background:${confirmColor}">${confirmText}</button>
+                        </div>
+                    `;
+
+                    box.innerHTML = title + text + buttonsHtml;
+                    overlay.appendChild(box);
+                    document.body.appendChild(overlay);
+
+                    const cleanup = (result) => {
+                        try { document.body.removeChild(overlay); } catch(e){/*ignore*/ }
+                        resolve({ isConfirmed: !!result });
+                    };
+
+                    box.querySelector('.mini-swal-confirm').addEventListener('click', () => cleanup(true));
+                    if (showCancel) {
+                        box.querySelector('.mini-swal-cancel').addEventListener('click', () => cleanup(false));
+                    }
+                });
+            }
+        };
+    })();
+    </script>
+
     <script src="login.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const db = require('../config/db');
 const {
     createTicket,
     getAllTickets,
@@ -15,14 +16,25 @@ const {
 // Criar novo chamado
 router.post('/', createTicket);
 
+// Buscar tipos de solicitação (DEVE VIR ANTES DAS ROTAS COM PARÂMETROS)
+router.get('/tipos-solicitacao', (req, res) => {
+    db.query('SELECT id_tipo, nome_tipo FROM tipos_solicitacao WHERE ativo = 1', (err, results) => {
+        if (err) {
+            console.error('DB SELECT TIPOS ERROR:', err);
+            return res.status(500).json({ message: 'Erro ao buscar tipos de solicitação.' });
+        }
+        return res.status(200).json({ tipos: results });
+    });
+});
+
 // Listar todos os chamados
 router.get('/', getAllTickets);
 
-// Buscar chamado por ID
-router.get('/:id', getTicketById);
-
 // Buscar chamados por usuário
 router.get('/user/:id_usuario', getTicketsByUser);
+
+// Buscar chamado por ID (DEVE VIR DEPOIS DE /tipos-solicitacao)
+router.get('/:id', getTicketById);
 
 // Atualizar status do chamado
 router.put('/:id/status', updateTicketStatus);
