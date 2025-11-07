@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal FSNT - Meus Tickets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="meusTickets.css">
+</head>
+<body>
+    <header-component></header-component>
+    <main>
+        <div class="tickets-container">
+            <h2>Portal FSNT</h2>
+            <h3>Meus tickets</h3>
+            
+            <div class="filters">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="pesquisa" placeholder="Pesquisa...">
+                </div>
+                <select id="filtro-status">
+                    <option value="">Status</option>
+                    <option value="aberto">Aberto</option>
+                    <option value="fechado">Fechado</option>
+                    <option value="em-andamento">Em Andamento</option>
+                </select>
+                <select id="filtro-tipo">
+                    <option value="">Tipo de ticket</option>
+                    <option value="computadores">Computadores</option>
+                    <option value="impressoras">Impressoras</option>
+                    <option value="rede">Rede</option>
+                    <option value="sistema">Sistema</option>
+                </select>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="tickets-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Resumo</th>
+                            <th>Status</th>
+                            <th>Solicitante</th>
+                            <th>Responsável</th>
+                            <th>Prioridade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tickets-tbody">
+                        <tr>
+                            <td>
+                                <div class="tipo-icon">
+                                    <i class="fa-solid fa-desktop"></i>
+                                </div>
+                            </td>
+                            <td>Computadores</td>
+                            <td><span class="status-badge status-fechado">Fechado</span></td>
+                            <td>Fulano da Silva Santos</td>
+                            <td>Ciclano Irano de Almeida</td>
+                            <td>Alta</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="tipo-icon">
+                                    <i class="fa-solid fa-desktop"></i>
+                                </div>
+                            </td>
+                            <td>Computadores</td>
+                            <td><span class="status-badge status-aberto">Aberto</span></td>
+                            <td>Fulano da Silva Santos</td>
+                            <td>Ciclano Irano de Almeida</td>
+                            <td>Alta</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <script src="/frontend/componentes/header/header.js"></script>
+    <script src="meusTickets.js" type="module"></script>
+</body>
+</html>
+

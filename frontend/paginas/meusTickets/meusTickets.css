@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    color: #398414;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 220px;
+    padding-bottom: 60px;
+}
+
+/* Container principal */
+.tickets-container {
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.tickets-container h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #398414;
+    margin-bottom: -8px;
+}
+
+.tickets-container h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #398414;
+    margin-bottom: 8px;
+}
+
+/* Filtros */
+.filters {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    max-width: 300px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #398414;
+    font-size: 14px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    border: 1px solid #398414;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.search-box input:focus {
+    border-color: #2d6810;
+}
+
+.filters select {
+    padding: 8px 12px;
+    border: 1px solid #398414;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #398414;
+    background-color: #e8e8e8;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filters select:hover {
+    background-color: #d8d8d8;
+}
+
+.filters select:focus {
+    border-color: #2d6810;
+}
+
+/* Tabela */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.tickets-table thead {
+    background-color: #f5f5f5;
+}
+
+.tickets-table thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+.tickets-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.tickets-table tbody tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.tickets-table tbody td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Ícone do tipo */
+.tipo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.tipo-icon i {
+    color: #666;
+    font-size: 18px;
+}
+
+/* Badge de status */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.status-fechado {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.status-aberto {
+    background-color: #FF9800;
+    color: #fff;
+}
+
+.status-em-andamento {
+    background-color: #2196F3;
+    color: #fff;
+}
+
+.status-aguardando {
+    background-color: #FFC107;
+    color: #fff;
+}
+
+.status-cancelado {
+    background-color: #9E9E9E;
+    color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    main {
+        padding-top: 180px;
+    }
+    
+    .filters {
+        flex-direction: column;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .table-wrapper {
+        font-size: 12px;
+    }
+    
+    .tickets-table thead th,
+    .tickets-table tbody td {
+        padding: 10px 8px;
+    }
+}
+
+/* Badge de status */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+}
+
+/* ABERTO */
+.status-aberto {
+    background-color: #FF9800;
+    color: #fff;
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.4);
+}
+
+/* EM ANDAMENTO */
+.status-em-andamento {
+    background-color: #2196F3;
+    color: #fff;
+    box-shadow: 0 0 5px rgba(33, 150, 243, 0.4);
+}
+
+/* AGUARDANDO RESPOSTA */
+.status-aguardando {
+    background-color: #FFC107;
+    color: #fff;
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.4);
+}
+
+/* RESOLVIDO */
+.status-resolvido {
+    background-color: #4CAF50;
+    color: #fff;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
+}
+
+/* CANCELADO */
+.status-cancelado {
+    background-color: #9E9E9E;
+    color: #fff;
+    box-shadow: 0 0 5px rgba(158, 158, 158, 0.4);
+}
+
+/* DESCONHECIDO / fallback */
+.status-desconhecido {
+    background-color: #607D8B;
+    color: #fff;
+}
+
+/* Cores dos ícones por tipo */
+.tipo-icon i.fa-computer { color: #4CAF50; }       /* Computador */
+.tipo-icon i.fa-print { color: #9C27B0; }          /* Impressora */
+.tipo-icon i.fa-wifi { color: #2196F3; }           /* Rede/Internet */
+.tipo-icon i.fa-code { color: #FF9800; }           /* Software */
+.tipo-icon i.fa-microchip { color: #607D8B; }      /* Hardware */
+.tipo-icon i.fa-envelope { color: #E91E63; }       /* E-mail */
+.tipo-icon i.fa-phone { color: #00BCD4; }          /* Telefonia */
+.tipo-icon i.fa-ticket { color: #9E9E9E; }         /* Outro */
+
