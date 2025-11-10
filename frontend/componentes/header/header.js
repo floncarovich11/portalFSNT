@@ -86,7 +86,7 @@ class Header extends HTMLElement {
                             <a href="../meusTickets/meusTickets.html" data-page="meus-tickets">Meus tickets</a>
                         </div>
                         <div class="nav-item">
-                            <a href="/ajuda" data-page="ajuda">Ajuda</a>
+                            <a href="../ajuda/ajuda.html" data-page="ajuda">Ajuda</a>
                         </div>
                     </nav>
                 </div>
