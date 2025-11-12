@@ -10,7 +10,8 @@ const {
     assignTechnician,
     addComment,
     getTicketHistory,
-    deleteTicket
+    deleteTicket,
+    getTechnicians  
 } = require('../controllers/ticketsController');
 
 // Criar novo chamado
@@ -26,6 +27,9 @@ router.get('/tipos-solicitacao', (req, res) => {
         return res.status(200).json({ tipos: results });
     });
 });
+
+// Listar técnicos disponíveis
+router.get('/tecnicos', getTechnicians);
 
 // Listar todos os chamados
 router.get('/', getAllTickets);

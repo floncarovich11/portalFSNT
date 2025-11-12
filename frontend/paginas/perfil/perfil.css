@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    color: #398414;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 220px;
+    padding-bottom: 60px;
+}
+
+/* Container principal */
+.perfil-container {
+    width: 80%;
+    max-width: 850px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header do perfil */
+.perfil-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.perfil-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #398414;
+}
+
+.perfil-header h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #398414;
+}
+
+/* Seção de Avatar */
+.avatar-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #398414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 32px;
+    font-weight: 600;
+    border: 3px solid #398414;
+    flex-shrink: 0;
+}
+
+.avatar-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.avatar-info h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #22500B;
+}
+
+.avatar-info p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.badge-tipo {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: #398414;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+/* Seções de informações */
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #22500B;
+    margin-bottom: 8px;
+}
+
+.info-section label {
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 4px;
+    color: #398414;
+}
+
+.info-section input,
+.info-section select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #398414;
+    border-radius: 4px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.info-section input:focus,
+.info-section select:focus {
+    border-color: #2d6810;
+}
+
+.info-section select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23398414' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    padding-right: 36px;
+    color: #333;
+}
+
+.info-section input::placeholder {
+    color: #999;
+}
+
+/* Botões */
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.buttons button {
+    border: none;
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.buttons .salvar {
+    background-color: #398414;
+    color: #fff;
+}
+
+.buttons .salvar:hover {
+    background-color: #2d6810;
+}
+
+.buttons .cancelar {
+    background-color: transparent;
+    border: 1px solid #398414;
+    color: #398414;
+}
+
+.buttons .cancelar:hover {
+    background-color: #398414;
+    color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    main {
+        padding-top: 140px;
+    }
+    
+    .perfil-container {
+        width: 90%;
+    }
+    
+    .avatar-section {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .avatar-info {
+        align-items: center;
+    }
+    
+    .buttons {
+        flex-direction: column;
+    }
+    
+    .buttons button {
+        width: 100%;
+    }
+}

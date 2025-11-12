@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal FSNT - Perfil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="perfil.css">
+</head>
+<body>
+    <header-component></header-component>
+    <main>
+        <div class="perfil-container">
+            <div class="perfil-header">
+                <h2>Portal FSNT</h2>
+                <h3>Meu perfil</h3>
+            </div>
+            <!-- Seção de Avatar (sem foto, apenas iniciais) -->
+            <div class="avatar-section">
+                <div class="avatar" id="avatarDisplay">
+                    ...
+                </div>
+                <div class="avatar-info">
+                    <h4 id="nomeUsuario">Carregando...</h4>
+                    <p id="emailUsuario">...</p>
+                    <span class="badge-tipo" id="tipoUsuario">...</span>
+                </div>
+            </div>
+            <!-- Informações Pessoais -->
+            <div class="info-section">
+                <h4 class="section-title">Informações pessoais</h4>
+                
+                <label for="nome">Nome completo*</label>
+                <input type="text" id="nome" placeholder="Carregando..." required>
+                
+                <label for="email">Email*</label>
+                <input type="email" id="email" placeholder="Carregando..." required>
+                
+                <label for="unidade">Unidade*</label>
+                <select id="unidade" required>
+                    <option value="">Carregando...</option>
+                    <!-- Será preenchido dinamicamente via JavaScript -->
+                </select>
+            </div>
+            <!-- Segurança -->
+            <div class="info-section">
+                <h4 class="section-title">Alterar senha</h4>
+                
+                <label for="senhaAtual">Senha atual*</label>
+                <input type="password" id="senhaAtual" placeholder="Digite sua senha atual">
+                
+                <label for="novaSenha">Nova senha*</label>
+                <input type="password" id="novaSenha" placeholder="Digite a nova senha">
+                
+                <label for="confirmarSenha">Confirmar nova senha*</label>
+                <input type="password" id="confirmarSenha" placeholder="Confirme a nova senha">
+            </div>
+            <!-- Botões de ação -->
+            <div class="buttons">
+                <button class="salvar" id="btnSalvar">Salvar alterações</button>
+                <button class="cancelar" id="btnCancelar">Cancelar</button>
+            </div>
+        </div>
+    </main>
+    
+    <script src="/frontend/componentes/header/header.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="perfil.js"></script>
+</body>
+</html>

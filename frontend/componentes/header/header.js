@@ -64,15 +64,15 @@ class Header extends HTMLElement {
                 <div class="header-top">
                     <div class="nada"></div>
                     <div class="logo">
-                        <a href="../inicio">
+                        <a href="../abrirTicket/abrirTicket.html">
                             <img src="/frontend/assets/img/logoFSNT.png" alt="Logo FSNT" />
                         </a>
                     </div>
                     <div class="icones">
-                        <a href="/ajuda" class="icon-link">
+                        <a href="../ajuda/ajuda.html" class="icon-link">
                             <img src="/frontend/assets/img/ajuda.png" alt="Ajuda" />
                         </a>
-                        <a href="/perfil" class="icon-link">
+                        <a href="../perfil/perfil.html" class="icon-link">
                             <img src="/frontend/assets/img/user.png" alt="Perfil" />
                         </a>
                     </div>
