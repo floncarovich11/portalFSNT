@@ -1,0 +1,383 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    color: #398414;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 220px;
+    padding-bottom: 60px;
+}
+
+.tickets-container {
+    width: 90%;
+    max-width: 1400px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #398414;
+    margin-bottom: 25px;
+}
+
+/* ================================
+   FILTROS
+================================ */
+.filters-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 240px;
+}
+
+.search-box i {
+    color: #888;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    flex: 1;
+}
+
+.filter-select {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-size: 14px;
+    color: #333;
+    min-width: 180px;
+}
+
+/* ================================
+   TABELA
+================================ */
+.table-wrapper {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tickets-table thead {
+    background-color: #f5f5f5;
+}
+
+.tickets-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+.tickets-table td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.tickets-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.tickets-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* BOTÕES DE AÇÃO */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+.action-btn.edit {
+    color: #398414;
+}
+
+.action-btn.delete {
+    color: #cc0000;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+/* BADGES */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-aberto {
+    background: #ffe5e5;
+    color: #d40000;
+}
+
+.badge-andamento {
+    background: #fff3cd;
+    color: #a67b00;
+}
+
+.badge-aguardando {
+    background: #e0e7ff;
+    color: #3f51b5;
+}
+
+.badge-resolvido {
+    background: #d4edda;
+    color: #2f7a36;
+}
+
+.badge-cancelado {
+    background: #e2e3e5;
+    color: #6c757d;
+}
+
+/* ================================
+   MODAL
+================================ */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* usar 100vh garante centralização correta mesmo com scroll */
+    height: 100vh;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+/* garantir que o conteúdo do modal não ultrapasse a tela e permita rolagem interna */
+.modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 650px;
+    border-radius: 10px;
+    padding: 20px 25px;
+    animation: fadeIn 0.2s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    margin: 0; /* centralizado pelo flex do modal */
+}
+
+@keyframes fadeIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 22px;
+    color: #398414;
+}
+
+.btn-close {
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #398414;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.modal-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.btn-secondary {
+    padding: 10px 18px;
+    border: 1px solid #ccc;
+    background: #f1f1f1;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    padding: 10px 18px;
+    background: #398414;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #2e6a10;
+}
+
+/* Estilos para botões de ação (editar / deletar) */
+.btn-edit,
+.btn-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    user-select: none;
+}
+
+/* Editar: verde suave */
+.btn-edit {
+    background: #e8f8ea;
+    color: #2f7a36;
+    border-color: rgba(47,122,54,0.12);
+}
+
+/* Deletar: vermelho suave */
+.btn-delete {
+    background: #fff0f0;
+    color: #b30000;
+    border-color: rgba(179,0,0,0.08);
+}
+
+/* Ícones dentro dos botões */
+.btn-edit i,
+.btn-delete i {
+    font-size: 14px;
+}
+
+/* Hover / focus */
+.btn-edit:hover,
+.btn-delete:hover,
+.btn-edit:focus,
+.btn-delete:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    opacity: 0.98;
+    outline: none;
+}
+
+/* Pequena proteção visual quando a tabela tiver muitos elementos */
+.tickets-table td .btn-edit,
+.tickets-table td .btn-delete {
+    margin-right: 6px;
+}
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    main {
+        padding-top: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .search-box {
+        flex: 1 1 100%;
+    }
+
+    .filter-select {
+        flex: 1 1 100%;
+    }
+}

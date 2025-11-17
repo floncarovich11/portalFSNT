@@ -6,7 +6,7 @@ export const criarChamado = async (dadosChamado) => {
         const res = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dadosChamado)
+            body: JSON.stringify(dadosChamado)  
         });
         
         const data = await res.json();
@@ -152,6 +152,25 @@ export const buscarUnidades = async () => {
         return await res.json();
     } catch (error) {
         console.error('Erro ao buscar unidades:', error);
+        throw error;
+    }
+};
+
+// Atualizar prioridade do chamado
+export const atualizarPrioridade = async (id, dados) => {
+    try {
+        const res = await fetch(`${API_URL}/${id}/prioridade`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        });
+        if (!res.ok) {
+            const errBody = await res.json().catch(() => ({}));
+            throw new Error(errBody.message || 'Erro ao atualizar prioridade');
+        }
+        return await res.json();
+    } catch (error) {
+        console.error('Erro ao atualizar prioridade:', error);
         throw error;
     }
 };

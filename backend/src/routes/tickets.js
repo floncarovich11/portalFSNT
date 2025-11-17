@@ -11,7 +11,8 @@ const {
     addComment,
     getTicketHistory,
     deleteTicket,
-    getTechnicians  
+    getTechnicians,
+    updateTicketPriority  
 } = require('../controllers/ticketsController');
 
 // Criar novo chamado
@@ -37,11 +38,11 @@ router.get('/', getAllTickets);
 // Buscar chamados por usuário
 router.get('/user/:id_usuario', getTicketsByUser);
 
-// Buscar chamado por ID (DEVE VIR DEPOIS DE /tipos-solicitacao)
-router.get('/:id', getTicketById);
-
 // Atualizar status do chamado
 router.put('/:id/status', updateTicketStatus);
+
+// Atualizar prioridade do chamado (rota original)
+router.put('/:id_chamado/prioridade', updateTicketPriority);
 
 // Atribuir técnico ao chamado
 router.put('/:id/atribuir', assignTechnician);

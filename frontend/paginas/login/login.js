@@ -3,7 +3,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
-
+    
     try {
         const response = await fetch('http://localhost:3000/auth/login', {
             method: 'POST',
@@ -12,9 +12,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             },
             body: JSON.stringify({ email, senha })
         });
-
+        
         const data = await response.json();
-
+        
         if (response.ok) {
             console.log('✅ Login bem-sucedido:', data);
             
@@ -34,10 +34,40 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
                     return;
                 }
                 
+                // ========================================
+                // REDIRECIONAMENTO BASEADO NO TIPO DE USUÁRIO
+                // ========================================
+                const tipoUsuario = data.usuario.tipo_usuario;
+                console.log('🔍 Tipo de usuário:', tipoUsuario);
+                
+                let destino = '';
+                
+                switch(tipoUsuario) {
+                    case 'Administrador':
+                        destino = '../dashboardADM/dashboardADM.html';
+                        console.log('👑 Redirecionando para Dashboard do Administrador');
+                        break;
+                    
+                    case 'TI':
+                        destino = '../dashboard/dashboardTI.html';
+                        console.log('💻 Redirecionando para Dashboard de TI');
+                        break;
+                    
+                    case 'Funcionario':
+                        destino = '../abrirTicket/abrirTicket.html';
+                        console.log('👤 Redirecionando para Abrir Ticket (Funcionário)');
+                        break;
+                    
+                    default:
+                        // Se o tipo não for reconhecido, redireciona para uma página padrão
+                        destino = '../abrirTicket/abrirTicket.html';
+                        console.log('⚠️ Tipo de usuário não reconhecido, redirecionando para página padrão');
+                }
+                
                 // Pequeno delay para garantir que salvou
                 setTimeout(() => {
-                    console.log('🔄 Redirecionando...');
-                    window.location.href = '../abrirTicket/abrirTicket.html';
+                    console.log('🔄 Redirecionando para:', destino);
+                    window.location.href = destino;
                 }, 100);
                 
             } else {

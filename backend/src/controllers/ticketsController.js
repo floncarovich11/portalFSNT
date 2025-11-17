@@ -1,4 +1,4 @@
-    const db = require('../config/db');
+const db = require('../config/db');
 
     // Criar novo chamado
     exports.createTicket = (req, res) => {
@@ -386,4 +386,44 @@
             });
         }
     );
+};
+
+// Atualizar a prioridade de um chamado
+exports.updateTicketPriority = (req, res) => {
+    const { id_cha } = req.params;
+    const { nova_prioridade } = req.body;
+
+    // Validação da prioridade
+    const prioridadesValidas = ['Baixa', 'Média', 'Alta', 'Urgente'];
+    if (!prioridadesValidas.includes(nova_prioridade)) {
+        return res.status(400).json({ erro: "Prioridade inválida." });
+    }
+
+    const sql = `
+        UPDATE chamados 
+        SET prioridade = ?, data_atualizacao = NOW() 
+        WHERE id_chamado = ? 
+    `;
+
+    db.query(sql, [nova_prioridade, id_chamado], (err, result) => {
+        if (err) {
+            console.error("Erro ao atualizar prioridade:", err);
+            return res.status(500).json({ erro: "Erro ao atualizar prioridade." });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ erro: "Chamado não encontrado." });
+        }
+
+        // Registrar no histórico
+        const historicoSql = `
+            INSERT INTO historico_chamado (id_chamado, id_usuario, tipo_acao, descricao_acao, status_anterior, status_novo)
+            VALUES (?, ?, 'Mudanca_Status', ?, NULL, ?)
+        `;
+        const descricao = `Prioridade alterada para ${nova_prioridade}`;
+        
+        db.query(historicoSql, [id_chamado, req.user.id_usuario, descricao, nova_prioridade]);
+
+        return res.json({ mensagem: "Prioridade atualizada com sucesso!" });
+    });
 };

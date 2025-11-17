@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal FSNT - Dashboard Administrador</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboardADM.css">
+</head>
+<body>
+    <header-adm></header-adm>
+    
+    <main>
+        <div class="dashboard-container">
+            <h1>Dashboard</h1>
+            
+            <!-- Cards de Estatísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total</span>
+                    <span class="stat-value" id="total-tickets">120</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Pendentes</span>
+                    <span class="stat-value" id="pendentes">45</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Em atendimento</span>
+                    <span class="stat-value" id="em-andamento">30</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Concluídos</span>
+                    <span class="stat-value" id="concluidos">45</span>
+                </div>
+            </div>
+            
+            <!-- Seção de Gráficos -->
+            <div class="charts-section">
+                <!-- Gráfico de Barras -->
+                <div class="chart-container">
+                    <div class="chart-title">Chamados por setor</div>
+                    <div class="bar-chart" id="bar-chart">
+                        <div class="bar" style="height: 80%;"></div>
+                        <div class="bar" style="height: 50%;"></div>
+                        <div class="bar" style="height: 90%;"></div>
+                        <div class="bar" style="height: 60%;"></div>
+                    </div>
+                </div>
+                
+                <!-- Gráfico de Pizza -->
+                <div class="chart-container">
+                    <div class="chart-title">Chamados por técnico</div>
+                    <div class="pie-chart" id="pie-chart"></div>
+                </div>
+            </div>
+            
+            <!-- Tabela de Últimos Chamados -->
+            <div class="table-section">
+                <div class="table-title">Últimas Chamados</div>
+                <div class="table-wrapper">
+                    <table class="tickets-table">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Resumo</th>
+                                <th>Solicitante</th>
+                                <th>Técnico</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ultimos-chamados">
+                            <tr>
+                                <td>Computador</td>
+                                <td>Estor d escoosses</td>
+                                <td>Funcionario</td>
+                                <td>Nome</td>
+                            </tr>
+                            <tr>
+                                <td>Charidon</td>
+                                <td>Paras sertosrl</td>
+                                <td>Funcionario</td>
+                                <td>Galão</td>
+                            </tr>
+                            <tr>
+                                <td>Rere</td>
+                                <td>Baeas lerden</td>
+                                <td>Funcionario</td>
+                                <td>Mecâ</td>
+                            </tr>
+                            <tr>
+                                <td>Rosy</td>
+                                <td>Paeas sartaoora</td>
+                                <td>Funcionario</td>
+                                <td>Meda</td>
+                            </tr>
+                            <tr>
+                                <td>Tseriba</td>
+                                <td>Parda ganoa</td>
+                                <td>Funcionario</td>
+                                <td>Môla</td>
+                            </tr>
+                            <tr>
+                                <td>Quiro</td>
+                                <td>Afagenorfila</td>
+                                <td>Funcionario</td>
+                                <td>Artill</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="/frontend/componentes/headerADM/headerADM.js"></script>
+    <script type="module" src="dashboardADM.js"></script>
+</body>
+</html>

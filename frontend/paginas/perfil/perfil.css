@@ -1,3 +1,8 @@
+/* =====================================================
+   PERFIL.CSS - SEM MODIFICAÇÕES
+   Mantendo seu CSS original
+   ===================================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 * {
@@ -199,6 +204,16 @@ main {
 .buttons .cancelar:hover {
     background-color: #398414;
     color: #fff;
+}
+
+/* Botão sair (deslogar) */
+.buttons .sair {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.buttons .sair:hover {
+    background-color: #b72a35;
 }
 
 /* Responsividade */
