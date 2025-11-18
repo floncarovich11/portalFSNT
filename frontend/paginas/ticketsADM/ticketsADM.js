@@ -1,4 +1,10 @@
-import { listarChamados, atribuirTecnico, atualizarStatus, deletarChamado } from '../../api/ticketsApi.js';
+import { 
+    listarChamados, 
+    atribuirTecnico, 
+    atualizarStatus, 
+    atualizarPrioridade,  // ✅ Importar nova função
+    deletarChamado 
+} from '../../api/ticketsApi.js';
 
 const CURRENT_USER_ID = 1; // ajuste conforme seu contexto (usuário logado)
 
@@ -10,7 +16,6 @@ let ticketAtual = null;
 const tbody = document.getElementById('tickets-tbody');
 const filtroBusca = document.getElementById('filtro-busca');
 const filtroStatus = document.getElementById('filtro-status');
-
 const modal = document.getElementById('modal-editar');
 const editResumo = document.getElementById('edit-resumo');
 const editSolicitante = document.getElementById('edit-solicitante');
@@ -73,6 +78,9 @@ function renderizarTabela(lista) {
             tipo.includes('telefonia') || tipo.includes('telefone') ? '<i class="fa-solid fa-phone"></i>' :
             '<i class="fa-solid fa-ticket"></i>';
 
+        // ✅ Adicionar classes de prioridade para estilização
+        const prioridadeClass = (c.prioridade || '').toLowerCase().replace('é', 'e');
+
         return `
         <tr data-id="${c.id_chamado}">
             <td>
@@ -84,8 +92,8 @@ function renderizarTabela(lista) {
             <td title="${escapeHtml(c.descricao || '')}">${escapeHtml(c.resumo || '')}</td>
             <td>${escapeHtml(c.nome_solicitante || '')}</td>
             <td>${escapeHtml(c.tecnico_responsavel || 'Não atribuído')}</td>
-            <td>${escapeHtml(c.prioridade || '')}</td>
-            <td>${escapeHtml(c.status_chamado || '')}</td>
+            <td><span class="badge-prioridade prioridade-${prioridadeClass}">${escapeHtml(c.prioridade || '')}</span></td>
+            <td><span class="badge-status">${escapeHtml(c.status_chamado || '')}</span></td>
             <td>
                 <button class="btn-edit" data-id="${c.id_chamado}" title="Editar chamado">
                     <i class="fa-solid fa-pen-to-square"></i>
@@ -110,7 +118,6 @@ function aplicarFiltros() {
     const status = filtroStatus.value;
 
     const filtrados = chamados.filter(c => {
-        // ...inclui mais campos para buscar pelo tipo também...
         const concat = `${c.resumo || ''} ${c.descricao || ''} ${c.nome_solicitante || ''} ${c.tecnico_responsavel || ''} ${(c.tipo_solicitacao || c.nome_tipo || '')}`.toLowerCase();
         const matchTermo = termo === '' || concat.includes(termo);
         const matchStatus = !status || c.status_chamado === status;
@@ -125,6 +132,7 @@ function abrirModalHandler(e) {
     const id = e.currentTarget.getAttribute('data-id');
     const ticket = chamados.find(t => String(t.id_chamado) === String(id));
     if (!ticket) return alert('Chamado não encontrado.');
+    
     ticketAtual = ticket;
     preencherModal(ticket);
     abrirModal();
@@ -137,19 +145,27 @@ function preencherModal(ticket) {
     editStatus.value = ticket.status_chamado || 'Aberto';
     editPrioridade.value = ticket.prioridade || 'Média';
     editObservacoes.value = ticket.observacoes_tecnico || '';
+
     preencherTecnicosNoModal();
 
     // Selecionar técnico atual (por email se disponível na lista)
-    const atual = tecnicos.find(t => String(t.id_usuario) === String(ticket.id_tecnico_responsavel) || t.nome_completo === ticket.tecnico_responsavel);
+    const atual = tecnicos.find(t => 
+        String(t.id_usuario) === String(ticket.id_tecnico_responsavel) || 
+        t.nome_completo === ticket.tecnico_responsavel
+    );
     if (atual) editTecnico.value = atual.email;
     else editTecnico.value = '';
 }
 
 function preencherTecnicosNoModal() {
     if (!editTecnico) return;
+    
     const options = ['<option value="">Não atribuído</option>']
-        .concat(tecnicos.map(t => `<option value="${escapeHtml(t.email)}">${escapeHtml(t.nome_completo)} — ${escapeHtml(t.email)} (${escapeHtml(t.nome_unidade)})</option>`))
+        .concat(tecnicos.map(t => 
+            `<option value="${escapeHtml(t.email)}">${escapeHtml(t.nome_completo)} — ${escapeHtml(t.email)} (${escapeHtml(t.nome_unidade)})</option>`
+        ))
         .join('');
+    
     editTecnico.innerHTML = options;
 }
 
@@ -164,9 +180,10 @@ function fecharModal() {
     ticketAtual = null;
 }
 
-// Salvar edição (global porque HTML usa onclick)
+// ✅ Salvar edição - ATUALIZADO COM LÓGICA SEPARADA PARA PRIORIDADE
 window.salvarEdicao = async function salvarEdicao() {
     if (!ticketAtual) return;
+
     const id = ticketAtual.id_chamado;
     const novoStatus = editStatus.value;
     const novaPrioridade = editPrioridade.value;
@@ -174,19 +191,44 @@ window.salvarEdicao = async function salvarEdicao() {
     const observacoes = editObservacoes.value;
 
     try {
-        // Se técnico escolhido e diferente do atual -> atribuir
+        // 1️⃣ Verificar se a PRIORIDADE mudou
+        const prioridadeMudou = ticketAtual.prioridade !== novaPrioridade;
+        
+        // 2️⃣ Se técnico escolhido e diferente do atual -> atribuir
         if (novoTecnicoEmail && novoTecnicoEmail !== '') {
-            await atribuirTecnico(id, { email_tecnico: novoTecnicoEmail, id_usuario: CURRENT_USER_ID });
-        } else if (novoTecnicoEmail === '' && ticketAtual.id_tecnico_responsavel) {
-            // opção: remover atribuição não implementada no backend; aqui apenas prossegue
+            const tecnicoAtual = tecnicos.find(t => 
+                String(t.id_usuario) === String(ticketAtual.id_tecnico_responsavel)
+            );
+            const emailAtual = tecnicoAtual ? tecnicoAtual.email : '';
+            
+            if (novoTecnicoEmail !== emailAtual) {
+                await atribuirTecnico(id, { 
+                    email_tecnico: novoTecnicoEmail, 
+                    id_usuario: CURRENT_USER_ID 
+                });
+            }
         }
 
-        // Atualizar status + prioridade + observações (backend deve aceitar prioridade)
-        await atualizarStatus(id, { status_chamado: novoStatus, id_usuario: CURRENT_USER_ID, observacoes_tecnico: observacoes, prioridade: novaPrioridade });
+        // 3️⃣ Atualizar STATUS (se mudou)
+        const statusMudou = ticketAtual.status_chamado !== novoStatus;
+        if (statusMudou || observacoes !== (ticketAtual.observacoes_tecnico || '')) {
+            await atualizarStatus(id, { 
+                status_chamado: novoStatus, 
+                id_usuario: CURRENT_USER_ID, 
+                observacoes_tecnico: observacoes 
+            });
+        }
 
+        // 4️⃣ Atualizar PRIORIDADE separadamente (se mudou)
+        if (prioridadeMudou) {
+            await atualizarPrioridade(id, novaPrioridade, CURRENT_USER_ID);
+        }
+
+        // 5️⃣ Recarregar dados e fechar modal
         await carregarChamados();
         fecharModal();
-        alert('Alterações salvas com sucesso.');
+        alert('Alterações salvas com sucesso!');
+        
     } catch (err) {
         console.error('Erro ao salvar edição:', err);
         alert('Erro ao salvar alterações. Veja o console para mais detalhes.');
@@ -197,6 +239,7 @@ window.salvarEdicao = async function salvarEdicao() {
 async function deletarHandler(e) {
     const id = e.currentTarget.getAttribute('data-id');
     if (!confirm('Deseja realmente deletar este chamado?')) return;
+
     try {
         await deletarChamado(id);
         await carregarChamados();

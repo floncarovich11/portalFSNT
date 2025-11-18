@@ -37,7 +37,7 @@ export const listarChamados = async () => {
 // Buscar chamado por ID
 export const buscarChamado = async (id) => {
     try {
-        const res = await fetch(`${API_URL}/${id}`);
+        const res = await fetch(`${API_URL}/${id}`); // ✅ Corrigido
         if (!res.ok) throw new Error('Erro ao buscar chamado');
         return await res.json();
     } catch (error) {
@@ -49,7 +49,7 @@ export const buscarChamado = async (id) => {
 // Buscar chamados por usuário
 export const meusChamados = async (idUsuario) => {
     try {
-        const res = await fetch(`${API_URL}/user/${idUsuario}`);
+        const res = await fetch(`${API_URL}/user/${idUsuario}`); // ✅ Corrigido
         if (!res.ok) throw new Error('Erro ao buscar seus chamados');
         return await res.json();
     } catch (error) {
@@ -61,7 +61,7 @@ export const meusChamados = async (idUsuario) => {
 // Atualizar status do chamado
 export const atualizarStatus = async (id, dados) => {
     try {
-        const res = await fetch(`${API_URL}/${id}/status`, {
+        const res = await fetch(`${API_URL}/${id}/status`, { // ✅ Corrigido
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -77,7 +77,7 @@ export const atualizarStatus = async (id, dados) => {
 // Atribuir técnico
 export const atribuirTecnico = async (id, dados) => {
     try {
-        const res = await fetch(`${API_URL}/${id}/atribuir`, {
+        const res = await fetch(`${API_URL}/${id}/atribuir`, { // ✅ Corrigido
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -93,7 +93,7 @@ export const atribuirTecnico = async (id, dados) => {
 // Adicionar comentário
 export const adicionarComentario = async (id, idUsuario, comentario) => {
     try {
-        const res = await fetch(`${API_URL}/${id}/comment`, {
+        const res = await fetch(`${API_URL}/${id}/comment`, { // ✅ Corrigido
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_usuario: idUsuario, comentario })
@@ -109,7 +109,7 @@ export const adicionarComentario = async (id, idUsuario, comentario) => {
 // Ver histórico do chamado
 export const verHistorico = async (id) => {
     try {
-        const res = await fetch(`${API_URL}/${id}/history`);
+        const res = await fetch(`${API_URL}/${id}/history`); // ✅ Corrigido
         if (!res.ok) throw new Error('Erro ao buscar histórico');
         return await res.json();
     } catch (error) {
@@ -121,7 +121,7 @@ export const verHistorico = async (id) => {
 // Deletar chamado
 export const deletarChamado = async (id) => {
     try {
-        const res = await fetch(`${API_URL}/${id}`, {
+        const res = await fetch(`${API_URL}/${id}`, { // ✅ Corrigido
             method: 'DELETE'
         });
         if (!res.ok) throw new Error('Erro ao deletar chamado');
@@ -135,7 +135,7 @@ export const deletarChamado = async (id) => {
 // Buscar tipos de solicitação
 export const buscarTiposSolicitacao = async () => {
     try {
-        const res = await fetch(`${API_URL}/tipos-solicitacao`);
+        const res = await fetch(`${API_URL}/tipos-solicitacao`); // ✅ Corrigido
         if (!res.ok) throw new Error('Erro ao buscar tipos de solicitação');
         return await res.json();
     } catch (error) {
@@ -156,18 +156,35 @@ export const buscarUnidades = async () => {
     }
 };
 
-// Atualizar prioridade do chamado
-export const atualizarPrioridade = async (id, dados) => {
+// Listar técnicos disponíveis
+export const listarTecnicos = async () => {
     try {
-        const res = await fetch(`${API_URL}/${id}/prioridade`, {
+        const res = await fetch(`${API_URL}/tecnicos`);
+        if (!res.ok) throw new Error('Erro ao listar técnicos');
+        return await res.json();
+    } catch (error) {
+        console.error('Erro ao listar técnicos:', error);
+        throw error;
+    }
+};
+
+// Atualizar prioridade do chamado
+export const atualizarPrioridade = async (idChamado, novaPrioridade, idUsuario) => {
+    try {
+        const res = await fetch(`${API_URL}/${idChamado}/prioridade`, { // ✅ Corrigido
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dados)
+            body: JSON.stringify({ 
+                nova_prioridade: novaPrioridade,
+                id_usuario: idUsuario 
+            })
         });
+        
         if (!res.ok) {
             const errBody = await res.json().catch(() => ({}));
             throw new Error(errBody.message || 'Erro ao atualizar prioridade');
         }
+        
         return await res.json();
     } catch (error) {
         console.error('Erro ao atualizar prioridade:', error);

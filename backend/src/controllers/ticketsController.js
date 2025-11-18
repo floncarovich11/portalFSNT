@@ -390,40 +390,85 @@ const db = require('../config/db');
 
 // Atualizar a prioridade de um chamado
 exports.updateTicketPriority = (req, res) => {
-    const { id_cha } = req.params;
-    const { nova_prioridade } = req.body;
+    const { id_chamado } = req.params; // ✅ Correto
+    const { nova_prioridade, id_usuario } = req.body;
+
+    console.log('=== UPDATE PRIORIDADE DEBUG ===');
+    console.log('ID Chamado:', id_chamado);
+    console.log('Nova Prioridade:', nova_prioridade);
+    console.log('ID Usuario:', id_usuario);
+
+    // Validação dos campos obrigatórios
+    if (!nova_prioridade || !id_usuario) {
+        return res.status(400).json({ 
+            message: 'Prioridade e ID do usuário são obrigatórios.' 
+        });
+    }
 
     // Validação da prioridade
     const prioridadesValidas = ['Baixa', 'Média', 'Alta', 'Urgente'];
     if (!prioridadesValidas.includes(nova_prioridade)) {
-        return res.status(400).json({ erro: "Prioridade inválida." });
+        return res.status(400).json({ message: 'Prioridade inválida.' });
     }
 
-    const sql = `
-        UPDATE chamados 
-        SET prioridade = ?, data_atualizacao = NOW() 
-        WHERE id_chamado = ? 
-    `;
-
-    db.query(sql, [nova_prioridade, id_chamado], (err, result) => {
+    // Buscar prioridade anterior
+    db.query('SELECT prioridade FROM chamados WHERE id_chamado = ?', [id_chamado], (err, results) => {
         if (err) {
-            console.error("Erro ao atualizar prioridade:", err);
-            return res.status(500).json({ erro: "Erro ao atualizar prioridade." });
+            console.error('DB SELECT PRIORIDADE ERROR:', err);
+            return res.status(500).json({ message: 'Erro ao verificar prioridade anterior.' });
         }
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ erro: "Chamado não encontrado." });
+        if (!results || results.length === 0) {
+            return res.status(404).json({ message: 'Chamado não encontrado.' });
         }
 
-        // Registrar no histórico
-        const historicoSql = `
-            INSERT INTO historico_chamado (id_chamado, id_usuario, tipo_acao, descricao_acao, status_anterior, status_novo)
-            VALUES (?, ?, 'Mudanca_Status', ?, NULL, ?)
-        `;
-        const descricao = `Prioridade alterada para ${nova_prioridade}`;
+        const prioridadeAnterior = results[0].prioridade;
+
+        // Se a prioridade não mudou, não precisa atualizar
+        if (prioridadeAnterior === nova_prioridade) {
+            return res.status(200).json({ 
+                message: 'Prioridade já está definida como ' + nova_prioridade,
+                prioridade_anterior: prioridadeAnterior,
+                prioridade_nova: nova_prioridade
+            });
+        }
+
+        // Atualizar prioridade
+        const sql = 'UPDATE chamados SET prioridade = ? WHERE id_chamado = ?';
         
-        db.query(historicoSql, [id_chamado, req.user.id_usuario, descricao, nova_prioridade]);
+        db.query(sql, [nova_prioridade, id_chamado], (updateErr, result) => {
+            if (updateErr) {
+                console.error('DB UPDATE PRIORIDADE ERROR:', updateErr);
+                return res.status(500).json({ message: 'Erro ao atualizar prioridade.' });
+            }
 
-        return res.json({ mensagem: "Prioridade atualizada com sucesso!" });
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: 'Chamado não encontrado.' });
+            }
+
+            // Registrar no histórico
+            const historicoSql = `
+                INSERT INTO historico_chamado 
+                (id_chamado, id_usuario, tipo_acao, descricao_acao, status_anterior, status_novo) 
+                VALUES (?, ?, ?, ?, ?, ?)
+            `;
+            const descricao = `Prioridade alterada de ${prioridadeAnterior} para ${nova_prioridade}`;
+            
+            db.query(
+                historicoSql, 
+                [id_chamado, id_usuario, 'Mudanca_Prioridade', descricao, prioridadeAnterior, nova_prioridade],
+                (histErr) => {
+                    if (histErr) {
+                        console.error('Erro ao registrar histórico:', histErr);
+                    }
+                    
+                    return res.status(200).json({ 
+                        message: 'Prioridade atualizada com sucesso!',
+                        prioridade_anterior: prioridadeAnterior,
+                        prioridade_nova: nova_prioridade
+                    });
+                }
+            );
+        });
     });
 };
