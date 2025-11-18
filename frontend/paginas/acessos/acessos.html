@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal FSNT - Usuários & Técnicos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="acessos.css">
+</head>
+<body>
+    <header-adm></header-adm>
+    
+    <main>
+        <div class="acessos-container">
+            <h1>Usuários & Técnicos</h1>
+            
+            <!-- Abas de Navegação -->
+            <div class="tabs-container">
+                <button class="tab-button active" data-tab="usuarios">
+                    <i class="fa-solid fa-users"></i>
+                    Usuários
+                </button>
+                <button class="tab-button" data-tab="tecnicos">
+                    <i class="fa-solid fa-user-gear"></i>
+                    Técnicos
+                </button>
+            </div>
+            
+            <!-- Conteúdo da Aba Usuários -->
+            <div class="tab-content active" id="usuarios-tab">
+                <div class="table-section">
+                    <div class="table-wrapper">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-Mail</th>
+                                    <th>Unidade</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usuarios-tbody">
+                                <tr>
+                                    <td>Computador</td>
+                                    <td>Funcionarios</td>
+                                    <td>Funcionário</td>
+                                    <td><span class="status-badge badge-ativo">Ativo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Impressora</td>
+                                    <td>Funcionarios</td>
+                                    <td>Funcionário</td>
+                                    <td><span class="status-badge badge-ativo">Ativo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Rede</td>
+                                    <td>Funcionarios</td>
+                                    <td>Funcionário</td>
+                                    <td><span class="status-badge badge-ativo">Ativo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Outro</td>
+                                    <td>Funcionarios</td>
+                                    <td>Funcionário</td>
+                                    <td><span class="status-badge badge-ativo">Ativo</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conteúdo da Aba Técnicos -->
+             
+            <div class="tab-content" id="tecnicos-tab">
+                <!-- Botão de adicionar técnico -->
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button id="btn-add-tecnico" class="btn-add-tecnico">
+                        <i class="fa-solid fa-user-plus"></i> Adicionar Técnico
+                    </button>
+                    <button id="btn-remove-tecnico" class="btn-remove-tecnico">
+                        <i class="fa-solid fa-user-minus"></i> Remover Técnico
+                    </button>
+                </div>
+                <div class="table-section">
+                    <div class="table-wrapper">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-Mail</th>
+                                    <th>Unidade</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tecnicos-tbody">
+                                <tr>
+                                    <td>João Silva</td>
+                                    <td>joao.silva@fsnt.com</td>
+                                    <td>TI</td>
+                                    <td><span class="status-badge badge-ativo">Ativo</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Maria Santos</td>
+                                    <td>maria.santos@fsnt.com</td>
+                                    <td>TI</td>
+                                    <td><span class="status-badge badge-ativo">Ativo</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="/frontend/componentes/headerADM/headerADM.js"></script>
+    <script type="module" src="acessos.js"></script>
+</body>
+</html>

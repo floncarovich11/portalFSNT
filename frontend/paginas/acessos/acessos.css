@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    color: #398414;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 220px;
+    padding-bottom: 60px;
+}
+
+.acessos-container {
+    width: 90%;
+    max-width: 1400px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #398414;
+    margin-bottom: 30px;
+}
+
+/* ===================================
+   ABAS DE NAVEGAÇÃO
+=================================== */
+.tabs-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-button {
+    background: transparent;
+    border: none;
+    padding: 15px 30px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tab-button i {
+    font-size: 16px;
+}
+
+.tab-button:hover {
+    color: #398414;
+    background-color: #f5f5f5;
+}
+
+.tab-button.active {
+    color: #398414;
+    border-bottom-color: #398414;
+    font-weight: 600;
+}
+
+/* ===================================
+   CONTEÚDO DAS ABAS
+=================================== */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================
+   TABELA
+=================================== */
+.table-section {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table thead {
+    background-color: #f5f5f5;
+}
+
+.users-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+.users-table td {
+    padding: 16px 16px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.users-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.users-table tbody tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+/* Badge de Status */
+.status-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-ativo {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-inativo {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* ===================================
+   RESPONSIVIDADE
+=================================== */
+@media (max-width: 968px) {
+    main {
+        padding-top: 180px;
+    }
+    
+    .tabs-container {
+        flex-wrap: wrap;
+    }
+    
+    .tab-button {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 600px) {
+    main {
+        padding-top: 160px;
+    }
+    
+    h1 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    
+    .tabs-container {
+        gap: 5px;
+    }
+    
+    .tab-button {
+        padding: 10px 15px;
+        font-size: 13px;
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .tab-button i {
+        font-size: 14px;
+    }
+    
+    .table-section {
+        padding: 15px;
+    }
+    
+    .users-table th,
+    .users-table td {
+        padding: 12px 10px;
+        font-size: 12px;
+    }
+    
+    .status-badge {
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+}
+
+.btn-add-tecnico {
+    background: #398414;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn-add-tecnico:hover {
+    background: #2f6c10;
+}
+
+.btn-remove-tecnico {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn-remove-tecnico:hover {
+    background: #b71c1c;
+}
