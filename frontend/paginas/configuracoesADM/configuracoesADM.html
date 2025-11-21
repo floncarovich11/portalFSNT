@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal FSNT - Configurações</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="configuracoesADM.css">
+</head>
+<body>
+    <header-adm></header-adm>
+    
+    <main>
+        <div class="config-container">
+            <h1>Configurações</h1>
+            
+            <!-- Seção: Categorias de Chamados -->
+            <div class="config-section">
+                <div class="section-header">
+                    <h2>Categorias de Chamados</h2>
+                    <button class="btn-add" onclick="abrirModalTipo('adicionar')">
+                        <i class="fa-solid fa-plus"></i>
+                        Adicionar Categoria
+                    </button>
+                </div>
+                
+                <div class="table-wrapper">
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tipos-tbody">
+                            <!-- Dados carregados via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Seção: Setores -->
+            <div class="config-section">
+                <div class="section-header">
+                    <h2>Setores</h2>
+                    <button class="btn-add" onclick="abrirModalUnidade('adicionar')">
+                        <i class="fa-solid fa-plus"></i>
+                        Adicionar Setor
+                    </button>
+                </div>
+                
+                <div class="table-wrapper">
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>Nome do Setor</th>
+                                <th>Data de Criação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="unidades-tbody">
+                            <!-- Dados carregados via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal para Categorias -->
+    <div id="modal-tipo" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-tipo-titulo">Adicionar Categoria</h2>
+                <button class="btn-close" onclick="fecharModalTipo()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="tipo-nome">Nome da Categoria *</label>
+                    <input type="text" id="tipo-nome" placeholder="Ex: Computador, Impressora..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tipo-descricao">Descrição</label>
+                    <textarea id="tipo-descricao" rows="3" placeholder="Descrição opcional da categoria..."></textarea>
+                </div>
+                
+                <div class="form-group" id="tipo-ativo-group" style="display: none;">
+                    <label for="tipo-ativo">Status</label>
+                    <select id="tipo-ativo">
+                        <option value="1">Ativo</option>
+                        <option value="0">Inativo</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="fecharModalTipo()">Cancelar</button>
+                <button class="btn-primary" onclick="salvarTipo()">Salvar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para Unidades -->
+    <div id="modal-unidade" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-unidade-titulo">Adicionar Setor</h2>
+                <button class="btn-close" onclick="fecharModalUnidade()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="unidade-nome">Nome do Setor *</label>
+                    <input type="text" id="unidade-nome" placeholder="Ex: Colégio, FATEC..." required>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="fecharModalUnidade()">Cancelar</button>
+                <button class="btn-primary" onclick="salvarUnidade()">Salvar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="modal-confirmar" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Confirmar Exclusão</h2>
+                <button class="btn-close" onclick="fecharModalConfirmar()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <p id="mensagem-confirmacao">Tem certeza que deseja excluir este item?</p>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="fecharModalConfirmar()">Cancelar</button>
+                <button class="btn-danger" onclick="confirmarExclusao()">Excluir</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/frontend/componentes/headerADM/headerADM.js"></script>
+    <script type="module" src="configuracoesADM.js"></script>
+</body>
+</html>

@@ -6,7 +6,7 @@ const authRoutes = require('./routes/auth');
 const ticketRoutes = require('./routes/tickets');
 const unidadesRoutes = require('./routes/unidades');
 const adminRoutes = require('./routes/admin');
-
+const configuracoesRoutes = require('./routes/configuracoes');
 
 app.use(express.json());
 app.use(cors({
@@ -34,4 +34,4 @@ app.use('/auth', authRoutes);
 app.use('/tickets', ticketRoutes);
 app.use('/unidades', unidadesRoutes);
 app.use('/admin', adminRoutes);
-
+app.use('/configuracoes', configuracoesRoutes); 
