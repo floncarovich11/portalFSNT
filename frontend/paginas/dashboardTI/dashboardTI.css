@@ -1,0 +1,462 @@
+/* ===================================
+   DASHBOARD TI - SISTEMA PORTAL FSNT
+   Estilos para Dashboard do Técnico
+=================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* ===================================
+   RESET E CONFIGURAÇÕES GLOBAIS
+=================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    color: #398414;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 220px;
+    padding-bottom: 60px;
+}
+
+/* ===================================
+   CONTAINER PRINCIPAL
+=================================== */
+.dashboard-container {
+    width: 90%;
+    max-width: 1400px;
+}
+
+/* ===================================
+   HEADER DO DASHBOARD
+=================================== */
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.header-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #398414;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    transition: transform 0.3s ease;
+}
+
+.header-icon:hover {
+    transform: rotate(90deg);
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #398414;
+    margin: 0;
+}
+
+/* ===================================
+   CARDS GERAIS
+=================================== */
+.card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #398414;
+    margin-bottom: 25px;
+}
+
+/* ===================================
+   GRID PRINCIPAL
+=================================== */
+.main-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+/* ===================================
+   BARRAS HORIZONTAIS
+=================================== */
+.bar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bar-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bar-label {
+    font-size: 16px;
+    width: 130px;
+    flex-shrink: 0;
+    color: #333;
+}
+
+.bar-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.bar {
+    height: 32px;
+    border-radius: 6px;
+    position: relative;
+    min-width: 80px;
+    transition: all 0.3s ease;
+}
+
+.bar:hover {
+    transform: scaleX(1.02);
+    filter: brightness(0.95);
+}
+
+.bar-value {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+}
+
+/* ===================================
+   CORES DOS STATUS - TONS DE VERDE
+=================================== */
+.bar-aberto {
+    background-color: #70b566;
+}
+
+.bar-progresso {
+    background-color: #92c587;
+}
+
+.bar-finalizado {
+    background-color: #a8d5a0;
+}
+
+/* ===================================
+   CORES DAS UNIDADES - TONS DE VERDE
+=================================== */
+.bar-sede {
+    background-color: #5da952;
+}
+
+.bar-filial1 {
+    background-color: #7ebe70;
+}
+
+.bar-filial2 {
+    background-color: #9bd08f;
+}
+
+/* ===================================
+   CARD DE PRIORIDADE
+=================================== */
+.prioridade-card {
+    margin-bottom: 30px;
+}
+
+.prioridade-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* ===================================
+   GRÁFICO DE PIZZA
+=================================== */
+.pie-chart {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #5da952 0deg 126deg,
+        #7ebe70 126deg 270deg,
+        #9bd08f 270deg 360deg
+    );
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.pie-chart:hover {
+    transform: scale(1.05);
+}
+
+/* ===================================
+   LEGENDA DO GRÁFICO
+=================================== */
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: #333;
+}
+
+.legend-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    transition: transform 0.2s ease;
+}
+
+.legend-item:hover .legend-color {
+    transform: scale(1.1);
+}
+
+.legend-baixa {
+    background-color: #5da952;
+}
+
+.legend-media {
+    background-color: #7ebe70;
+}
+
+.legend-alta {
+    background-color: #9bd08f;
+}
+
+/* ===================================
+   TABELA DE ÚLTIMOS CHAMADOS
+=================================== */
+.table-card {
+    margin-bottom: 30px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tickets-table thead {
+    background-color: #f5f5f5;
+}
+
+.tickets-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+.tickets-table td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.tickets-table tbody tr {
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.tickets-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* ===================================
+   BADGES E TAGS (CASO PRECISE)
+=================================== */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-verde {
+    background-color: #a8d5a0;
+    color: #2d5a26;
+}
+
+.badge-amarelo {
+    background-color: #f4e4a0;
+    color: #7a6a1a;
+}
+
+.badge-vermelho {
+    background-color: #f4a0a0;
+    color: #7a1a1a;
+}
+
+/* ===================================
+   LOADING E ESTADOS VAZIOS
+=================================== */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: #398414;
+}
+
+.loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+.empty-state i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #ddd;
+}
+
+/* ===================================
+   RESPONSIVIDADE
+=================================== */
+@media (max-width: 968px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    main {
+        padding-top: 180px;
+    }
+}
+
+@media (max-width: 600px) {
+    main {
+        padding-top: 160px;
+    }
+    
+    .dashboard-container {
+        width: 95%;
+    }
+    
+    h1 {
+        font-size: 22px;
+    }
+    
+    .header-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .card {
+        padding: 15px;
+    }
+    
+    .card-title {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .bar-label {
+        width: 100px;
+        font-size: 14px;
+    }
+    
+    .bar {
+        height: 28px;
+    }
+    
+    .bar-value {
+        font-size: 14px;
+        right: 8px;
+    }
+    
+    .prioridade-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pie-chart {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .legend {
+        width: 100%;
+    }
+    
+    .legend-item {
+        font-size: 14px;
+    }
+    
+    .tickets-table th,
+    .tickets-table td {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .dashboard-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    .bar-label {
+        width: 80px;
+        font-size: 12px;
+    }
+}

@@ -49,7 +49,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
                         break;
                     
                     case 'TI':
-                        destino = '../dashboard/dashboardTI.html';
+                        destino = '../dashboardTI/dashboardTI.html';
                         console.log('💻 Redirecionando para Dashboard de TI');
                         break;
                     
