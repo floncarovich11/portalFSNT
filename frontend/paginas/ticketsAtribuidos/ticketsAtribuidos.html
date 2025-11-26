@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal FSNT - Gerenciar Tickets</title>
+    <title>Portal FSNT - Tickets Atribuídos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="ticketsADM.css">
+    <link rel="stylesheet" href="ticketsAtribuidos.css">
+    <style>
+        /* Remove a seta do select mantendo aparência normal */
+        #edit-prioridade.no-arrow-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: none;
+            padding-right: 0.5rem;
+            cursor: default;
+        }
+        /* IE/Edge */
+        #edit-prioridade.no-arrow-select::-ms-expand { display: none; }
+    </style>
 </head>
 <body>
-    <header-adm></header-adm>
+    <header-ti></header-ti>
     
     <main>
         <div class="tickets-container">
-            <h1>Tickets</h1>
+            <h1>Meus Tickets</h1>
             
             <!-- Filtros -->
             <div class="filters-row">
@@ -29,6 +42,14 @@
                     <option value="Resolvido">Resolvido</option>
                     <option value="Cancelado">Cancelado</option>
                 </select>
+                
+                <select id="filtro-prioridade" class="filter-select">
+                    <option value="">Prioridade</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média">Média</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Urgente">Urgente</option>
+                </select>
             </div>
             
             <!-- Tabela de Tickets -->
@@ -40,9 +61,9 @@
                             <th>Resumo</th>
                             <th>Solicitante</th>
                             <th>Unidade</th>
-                            <th>Técnico</th>
                             <th>Prioridade</th>
                             <th>Status</th>
+                            <th>Data Abertura</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -54,11 +75,11 @@
         </div>
     </main>
     
-    <!-- Modal de Edição -->
-    <div id="modal-editar" class="modal">
+    <!-- Modal de Visualização/Edição -->
+    <div id="modal-ticket" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Editar Ticket</h2>
+                <h2>Detalhes do Ticket</h2>
                 <button class="btn-close" onclick="fecharModal()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -67,12 +88,24 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Resumo</label>
-                    <input type="text" id="edit-resumo" readonly>
+                    <input type="text" id="view-resumo" readonly>
                 </div>
                 
                 <div class="form-group">
-                    <label>Solicitante</label>
-                    <input type="text" id="edit-solicitante" readonly>
+                    <label>Descrição Completa</label>
+                    <textarea id="view-descricao" rows="4" readonly></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Solicitante</label>
+                        <input type="text" id="view-solicitante" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tipo de Solicitação</label>
+                        <input type="text" id="view-tipo" readonly>
+                    </div>
                 </div>
                 
                 <div class="form-row">
@@ -89,7 +122,7 @@
                     
                     <div class="form-group">
                         <label for="edit-prioridade">Prioridade *</label>
-                        <select id="edit-prioridade" required>
+                        <select id="edit-prioridade" class="no-arrow-select" title="Prioridade definida pelo sistema">
                             <option value="Baixa">Baixa</option>
                             <option value="Média">Média</option>
                             <option value="Alta">Alta</option>
@@ -99,27 +132,19 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="edit-tecnico">Técnico Responsável</label>
-                    <select id="edit-tecnico">
-                        <option value="">Não atribuído</option>
-                        <!-- Será preenchido via JS -->
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="edit-observacoes">Observações do Técnico</label>
-                    <textarea id="edit-observacoes" rows="4" placeholder="Adicione observações sobre o ticket..."></textarea>
+                    <label for="edit-observacoes">Observações do Atendimento</label>
+                    <textarea id="edit-observacoes" rows="5" placeholder="Adicione observações sobre o atendimento deste ticket..."></textarea>
                 </div>
             </div>
             
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
-                <button class="btn-primary" onclick="salvarEdicao()">Salvar Alterações</button>
+                <button class="btn-primary" onclick="salvarAlteracoes()">Salvar Alterações</button>
             </div>
         </div>
     </div>
     
-    <script src="/frontend/componentes/headerADM/headerADM.js"></script>
-    <script type="module" src="ticketsADM.js"></script>
+    <script src="/frontend/componentes/headerTI/headerTI.js"></script>
+    <script type="module" src="ticketsAtribuidos.js"></script>
 </body>
 </html>

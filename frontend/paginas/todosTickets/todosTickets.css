@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* ...reset básico... */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#fff;
+  color:#398414;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+/* centraliza o conteúdo abaixo do header (se o header usar espaço fixo similar) */
+main{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding-top:220px;
+  padding-bottom:60px;
+}
+
+.tickets-container{
+  width:90%;
+  max-width:1200px;
+}
+
+h1{
+  font-size:26px;
+  font-weight:600;
+  color:#398414;
+  margin-bottom:20px;
+}
+
+/* FILTROS */
+.filters-row{
+  display:flex;
+  gap:12px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.search-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff;
+  border:1px solid #e6e6e6;
+  padding:10px 14px;
+  border-radius:8px;
+  flex:1;
+  min-width:220px;
+}
+
+.search-box i{color:#888}
+.search-box input{
+  border:none;
+  outline:none;
+  font-size:14px;
+  flex:1;
+}
+
+.filter-select{
+  padding:10px 14px;
+  border-radius:8px;
+  border:1px solid #e6e6e6;
+  background:#fff;
+  font-size:14px;
+  color:#333;
+  min-width:160px;
+}
+
+/* TABELA */
+.table-wrapper{
+  width:100%;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:8px;
+  overflow-x:auto;
+  padding:10px;
+}
+
+.tickets-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:800px;
+}
+
+.tickets-table thead{background:#fafafa}
+.tickets-table th{
+  padding:12px 16px;
+  text-align:left;
+  font-weight:600;
+  font-size:13px;
+  color:#333;
+  border-bottom:1px solid #eee;
+}
+
+.tickets-table td{
+  padding:12px 16px;
+  font-size:14px;
+  color:#333;
+  border-bottom:1px solid #f4f4f4;
+}
+
+.tickets-table tbody tr{transition:background-color .15s ease}
+.tickets-table tbody tr:hover{background:#fbfbfb}
+
+/* tipo / ícone */
+.tipo-icon{display:flex;align-items:center;gap:8px}
+.tipo-text{font-size:14px;color:#333}
+
+/* BADGES neutras com variações */
+.badge-prioridade,
+.badge-status{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:500;
+  background:#f3f4f6;
+  color:#333;
+  border:1px solid #e6e7e9;
+}
+
+/* se quiser variações coloridas no futuro, mantenha essas classes */
+.prioridade-baixa{background:#f3f4f6}
+.prioridade-media{background:#f3f4f6}
+.prioridade-alta{background:#f3f4f6}
+.prioridade-urgente{background:#f3f4f6}
+
+/* INDICADOR de vazio / loading */
+.tickets-empty{
+  text-align:center;
+  padding:2rem;
+  color:#666;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width:900px){
+  .tickets-table{min-width:700px}
+  main{padding-top:200px}
+}
+
+@media (max-width:600px){
+  .tickets-table{min-width:600px}
+  .filter-select{min-width:140px}
+  h1{font-size:22px}
+  .search-box{min-width:100%}
+}

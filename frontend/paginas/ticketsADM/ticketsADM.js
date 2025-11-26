@@ -40,7 +40,7 @@ async function carregarChamados() {
         renderizarTabela(chamados);
     } catch (err) {
         console.error('Erro ao carregar chamados:', err);
-        tbody.innerHTML = '<tr><td colspan="7">Erro ao carregar chamados.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8">Erro ao carregar chamados.</td></tr>';
     }
 }
 
@@ -60,7 +60,7 @@ async function carregarTecnicos() {
 // Renderizar tabela de chamados
 function renderizarTabela(lista) {
     if (!lista || lista.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7">Nenhum chamado encontrado.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8">Nenhum chamado encontrado.</td></tr>';
         return;
     }
 
@@ -91,6 +91,7 @@ function renderizarTabela(lista) {
             </td>
             <td title="${escapeHtml(c.descricao || '')}">${escapeHtml(c.resumo || '')}</td>
             <td>${escapeHtml(c.nome_solicitante || '')}</td>
+            <td>${escapeHtml(c.nome_unidade || '')}</td>
             <td>${escapeHtml(c.tecnico_responsavel || 'Não atribuído')}</td>
             <td><span class="badge-prioridade prioridade-${prioridadeClass}">${escapeHtml(c.prioridade || '')}</span></td>
             <td><span class="badge-status">${escapeHtml(c.status_chamado || '')}</span></td>

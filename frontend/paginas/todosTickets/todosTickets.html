@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Portal FSNT - Todos os Tickets</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<!-- Reaproveita o estilo da tela de administração para consistência -->
+	<link rel="stylesheet" href="todosTickets.css">
+</head>
+<body>
+	<header-ti></header-ti>
+
+	<main>
+		<div class="tickets-container">
+			<h1>Todos os Tickets</h1>
+
+			<!-- Filtros -->
+			<div class="filters-row">
+				<div class="search-box">
+					<i class="fa-solid fa-magnifying-glass"></i>
+					<input type="text" id="filtro-busca" placeholder="Buscar...">
+				</div>
+
+				<select id="filtro-status" class="filter-select">
+					<option value="">Status</option>
+					<option value="Aberto">Aberto</option>
+					<option value="Em Andamento">Em Andamento</option>
+					<option value="Aguardando Resposta">Aguardando Resposta</option>
+					<option value="Resolvido">Resolvido</option>
+					<option value="Cancelado">Cancelado</option>
+				</select>
+			</div>
+
+			<!-- Tabela de Tickets (somente leitura) -->
+			<div class="table-wrapper">
+				<table class="tickets-table">
+					<thead>
+						<tr>
+							<th>Tipo</th>
+							<th>Resumo</th>
+							<th>Solicitante</th>
+							<th>Unidade</th>
+							<th>Técnico</th>
+							<th>Prioridade</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody id="tickets-tbody">
+						<!-- Dados serão carregados via JavaScript -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+
+	<script src="/frontend/componentes/headerTI/headerTI.js"></script>
+	<script type="module" src="todosTickets.js"></script>
+</body>
+</html>
