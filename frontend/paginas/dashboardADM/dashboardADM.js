@@ -1,5 +1,6 @@
 // Importar as funções da API
 import { listarChamados } from '../../api/ticketsApi.js';
+import { getCurrentUserFromToken } from '../../api/authApi.js';
 
 // Função para buscar estatísticas gerais
 async function carregarEstatisticas() {
@@ -413,6 +414,26 @@ function iniciarAtualizacaoAutomatica() {
 // Carregar dashboard quando a página carregar
 document.addEventListener('DOMContentLoaded', () => {
     console.log('📄 DOM carregado, iniciando dashboard...');
+    
+    // ✅ VERIFICAR PERMISSÃO ANTES DE TUDO
+    const usuario = getCurrentUserFromToken();
+    if (!usuario || usuario.tipo_usuario !== 'Administrador') {
+        console.error('❌ Acesso negado - apenas Administradores podem acessar esta página');
+        alert('Acesso negado! Apenas Administradores podem acessar esta página.');
+        
+        // ✅ REDIRECIONAR BASEADO NO TIPO
+        let destino = '../abrirTicket/abrirTicket.html';
+        if (usuario) {
+            if (usuario.tipo_usuario === 'TI') {
+                destino = '../dashboardTI/dashboardTI.html';
+            }
+        }
+        window.location.href = destino;
+        return;
+    }
+
+    console.log('✅ Acesso permitido para Administrador:', usuario.nome_completo);
+    
     carregarDashboard();
     iniciarAtualizacaoAutomatica();
 });

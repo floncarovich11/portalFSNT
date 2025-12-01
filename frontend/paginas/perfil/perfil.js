@@ -272,18 +272,12 @@ async function salvarAlteracoes() {
             }
         });
         
-        // Enviar atualização
-        const usuarioLogado = JSON.parse(localStorage.getItem('usuario'));
-        const resultado = await updatePerfil(usuarioLogado.id, dadosAtualizacao);
+        // Obter id do usuário do token
+        const usuarioPayload = getCurrentUserFromToken();
+        const idUsuario = usuarioPayload.id_usuario || usuarioPayload.id;
         
-        // Atualizar localStorage com novos dados
-        const usuarioAtualizado = {
-            ...usuarioLogado,
-            nome_completo: resultado.usuario.nome_completo,
-            email: resultado.usuario.email,
-            id_unidade: resultado.usuario.id_unidade
-        };
-        localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado));
+        // Enviar atualização
+        const resultado = await updatePerfil(idUsuario, dadosAtualizacao);
         
         // Limpar campos de senha
         document.getElementById('senhaAtual').value = '';
@@ -291,7 +285,7 @@ async function salvarAlteracoes() {
         document.getElementById('confirmarSenha').value = '';
         
         // Recarregar dados
-        await carregarDadosUsuario(usuarioLogado.id);
+        await carregarDadosUsuario(idUsuario);
         
         // Mostrar sucesso
         Swal.fire({
@@ -326,9 +320,12 @@ async function cancelarAlteracoes() {
     });
     
     if (confirmacao.isConfirmed) {
+        // Obter id do usuário do token
+        const usuarioPayload = getCurrentUserFromToken();
+        const idUsuario = usuarioPayload.id_usuario || usuarioPayload.id;
+        
         // Recarregar dados originais
-        const usuarioLogado = JSON.parse(localStorage.getItem('usuario'));
-        await carregarDadosUsuario(usuarioLogado.id);
+        await carregarDadosUsuario(idUsuario);
         
         // Limpar campos de senha
         document.getElementById('senhaAtual').value = '';
@@ -349,7 +346,6 @@ async function cancelarAlteracoes() {
 // LOGOUT
 // =====================================================
 function logout() {
-    // Usar Swal se disponível, caso contrário fallback com confirm
     const ask = () => {
         if (window.Swal && typeof window.Swal.fire === 'function') {
             return Swal.fire({
@@ -369,9 +365,10 @@ function logout() {
 
     ask().then(result => {
         if (result.isConfirmed) {
-            // Remover dados do usuário e redirecionar
+            // Remover token e dados do usuário
+            localStorage.removeItem('token');
             localStorage.removeItem('usuario');
-            // mostrar feedback rápido antes do redirect (opcional)
+            
             if (window.Swal && typeof window.Swal.fire === 'function') {
                 Swal.fire({
                     icon: 'success',

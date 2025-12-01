@@ -7,12 +7,33 @@ import {
     promoverTecnico,
     removerTecnico  
 } from '../../api/adminApi.js';
+import { getCurrentUserFromToken } from '../../api/authApi.js';
 
 // ===================================
 // INICIALIZAÇÃO
 // ===================================
 document.addEventListener('DOMContentLoaded', () => {
     console.log('📄 Página de acessos carregada');
+    
+    // ✅ VERIFICAR PERMISSÃO ANTES DE TUDO
+    const usuario = getCurrentUserFromToken();
+    if (!usuario || usuario.tipo_usuario !== 'Administrador') {
+        console.error('❌ Acesso negado - apenas Administradores podem acessar esta página');
+        alert('Acesso negado! Apenas Administradores podem acessar esta página.');
+        
+        // ✅ REDIRECIONAR BASEADO NO TIPO
+        let destino = '../abrirTicket/abrirTicket.html';
+        if (usuario) {
+            if (usuario.tipo_usuario === 'TI') {
+                destino = '../dashboardTI/dashboardTI.html';
+            }
+        }
+        window.location.href = destino;
+        return;
+    }
+
+    console.log('✅ Acesso permitido para Administrador:', usuario.nome_completo);
+
     inicializarAbas();
     carregarUsuarios();
     carregarTecnicos();

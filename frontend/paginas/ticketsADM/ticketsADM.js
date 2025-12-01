@@ -2,7 +2,7 @@ import {
     listarChamados, 
     atribuirTecnico, 
     atualizarStatus, 
-    atualizarPrioridade,  // ✅ Importar nova função
+    atualizarPrioridade,  
     deletarChamado 
 } from '../../api/ticketsApi.js';
 import { getCurrentUserFromToken } from '../../api/authApi.js';
@@ -25,6 +25,20 @@ const editObservacoes = document.getElementById('edit-observacoes');
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
+    // ✅ VERIFICAR PERMISSÃO ANTES DE TUDO
+    const usuario = getCurrentUserFromToken();
+    if (!usuario || usuario.tipo_usuario !== 'Administrador') {
+        console.error('❌ Acesso negado - apenas Administradores podem acessar esta página');
+        alert('Acesso negado! Apenas Administradores podem acessar esta página.');
+        window.location.href = '../abrirTicket/abrirTicket.html';
+        return;
+    }
+
+    console.log('✅ Acesso permitido para Administrador:', usuario.nome_completo);
+
+    // Derivar CURRENT_USER_ID do token
+    const CURRENT_USER_ID = usuario.id_usuario || usuario.id;
+
     carregarTecnicos();
     carregarChamados();
     filtroBusca.addEventListener('input', aplicarFiltros);
@@ -182,19 +196,21 @@ function fecharModal() {
 
 // ✅ Salvar edição - ATUALIZADO COM LÓGICA SEPARADA PARA PRIORIDADE
 window.salvarEdicao = async function salvarEdicao() {
+    // Obter usuario do token para ter CURRENT_USER_ID
+    const usuario = getCurrentUserFromToken();
+    const CURRENT_USER_ID = usuario ? (usuario.id_usuario || usuario.id) : null;
+
     if (!ticketAtual) return;
 
     const id = ticketAtual.id_chamado;
     const novoStatus = editStatus.value;
     const novaPrioridade = editPrioridade.value;
-    const novoTecnicoEmail = editTecnico.value; // pode ser ''
+    const novoTecnicoEmail = editTecnico.value;
     const observacoes = editObservacoes.value;
 
     try {
-        // 1️⃣ Verificar se a PRIORIDADE mudou
         const prioridadeMudou = ticketAtual.prioridade !== novaPrioridade;
         
-        // 2️⃣ Se técnico escolhido e diferente do atual -> atribuir
         if (novoTecnicoEmail && novoTecnicoEmail !== '') {
             const tecnicoAtual = tecnicos.find(t => 
                 String(t.id_usuario) === String(ticketAtual.id_tecnico_responsavel)
@@ -209,7 +225,6 @@ window.salvarEdicao = async function salvarEdicao() {
             }
         }
 
-        // 3️⃣ Atualizar STATUS (se mudou)
         const statusMudou = ticketAtual.status_chamado !== novoStatus;
         if (statusMudou || observacoes !== (ticketAtual.observacoes_tecnico || '')) {
             await atualizarStatus(id, { 
@@ -219,12 +234,10 @@ window.salvarEdicao = async function salvarEdicao() {
             });
         }
 
-        // 4️⃣ Atualizar PRIORIDADE separadamente (se mudou)
         if (prioridadeMudou) {
             await atualizarPrioridade(id, novaPrioridade, CURRENT_USER_ID);
         }
 
-        // 5️⃣ Recarregar dados e fechar modal
         await carregarChamados();
         fecharModal();
         alert('Alterações salvas com sucesso!');
