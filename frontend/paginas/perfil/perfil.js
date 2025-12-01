@@ -2,7 +2,7 @@
 // PERFIL.JS - INTEGRAÇÃO COMPLETA
 // =====================================================
 
-import { getUsuario, updatePerfil } from '../../api/authApi.js';
+import { getUsuario, updatePerfil, getCurrentUserFromToken } from '../../api/authApi.js';
 
 // Polyfill leve/fallback para Swal (evita ReferenceError durante carregamento)
 // Não sobrescreve Swal real, apenas garante que existirá um objeto com métodos mínimos.
@@ -33,10 +33,9 @@ let unidades = [];
 // INICIALIZAÇÃO
 // =====================================================
 document.addEventListener('DOMContentLoaded', async () => {
-    // Verificar se usuário está logado
-    const usuarioLogado = JSON.parse(localStorage.getItem('usuario'));
-    
-    if (!usuarioLogado || !usuarioLogado.id) {
+    // Verificar se usuário está logado (via token)
+    const usuarioPayload = getCurrentUserFromToken();
+    if (!usuarioPayload || !usuarioPayload.id_usuario) {
         Swal.fire({
             icon: 'warning',
             title: 'Acesso negado',
@@ -50,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Carregar dados
     await carregarUnidades();
-    await carregarDadosUsuario(usuarioLogado.id);
+    await carregarDadosUsuario(usuarioPayload.id_usuario);
     
     // Event listeners
     document.getElementById('btnSalvar').addEventListener('click', salvarAlteracoes);

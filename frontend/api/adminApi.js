@@ -1,16 +1,19 @@
 // =====================================================
 // API DE ADMINISTRAÇÃO - PORTAL FSNT (SEM JWT)
 // =====================================================
+import { getCurrentUserFromToken, getAuthHeaders } from './authApi.js';
+
 const API_BASE_URL = 'http://localhost:3000';
 
 // =====================================================
 // AUX: obter usuário completo do localStorage
 function getUsuario() {
     try {
-        const usuario = JSON.parse(localStorage.getItem('usuario'));
-        return usuario;
+        // agora usa o token para obter payload
+        const usuario = getCurrentUserFromToken();
+        return usuario || null;
     } catch (e) {
-        console.error('❌ Erro ao ler localStorage:', e);
+        console.error('❌ Erro ao ler token:', e);
         return null;
     }
 }
@@ -40,7 +43,8 @@ export const listarUsuarios = async () => {
         }
         
         const res = await fetch(`${API_BASE_URL}/admin/usuarios?id_usuario=${id}`, {
-            method: 'GET'
+            method: 'GET',
+            headers: getAuthHeaders()
         });
         
         const data = await res.json();
@@ -104,9 +108,7 @@ export const promoverTecnico = async (email) => {
         
         const res = await fetch(`${API_BASE_URL}/admin/promover-tecnico`, {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify({ email, id_usuario })
         });
         
@@ -137,9 +139,7 @@ export const removerTecnico = async (email) => {
         
         const res = await fetch(`${API_BASE_URL}/admin/remover-tecnico`, {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify({ email, id_usuario })
         });
         

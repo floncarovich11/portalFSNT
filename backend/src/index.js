@@ -1,3 +1,6 @@
+// carregar variáveis de ambiente de .env
+require('dotenv').config();
+
 const db = require('./config/db');
 const express = require('express');
 const app = express();

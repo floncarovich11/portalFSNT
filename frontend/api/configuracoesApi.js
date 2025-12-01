@@ -1,5 +1,13 @@
 const API_URL = 'http://localhost:3000/configuracoes';
 
+function getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+    };
+}
+
 // =====================================================
 // TIPOS DE SOLICITAÇÃO
 // =====================================================
@@ -21,7 +29,7 @@ export const adicionarTipo = async (dadosTipo) => {
     try {
         const res = await fetch(`${API_URL}/tipos`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dadosTipo)
         });
         
@@ -43,7 +51,7 @@ export const editarTipo = async (idTipo, dadosTipo) => {
     try {
         const res = await fetch(`${API_URL}/tipos/${idTipo}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dadosTipo)
         });
         
@@ -64,7 +72,8 @@ export const editarTipo = async (idTipo, dadosTipo) => {
 export const deletarTipo = async (idTipo) => {
     try {
         const res = await fetch(`${API_URL}/tipos/${idTipo}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: getAuthHeaders()
         });
         
         const data = await res.json();
@@ -101,7 +110,7 @@ export const adicionarUnidade = async (dadosUnidade) => {
     try {
         const res = await fetch(`${API_URL}/unidades`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dadosUnidade)
         });
         
@@ -123,7 +132,7 @@ export const editarUnidade = async (idUnidade, dadosUnidade) => {
     try {
         const res = await fetch(`${API_URL}/unidades/${idUnidade}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dadosUnidade)
         });
         
@@ -144,7 +153,8 @@ export const editarUnidade = async (idUnidade, dadosUnidade) => {
 export const deletarUnidade = async (idUnidade) => {
     try {
         const res = await fetch(`${API_URL}/unidades/${idUnidade}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: getAuthHeaders()
         });
         
         const data = await res.json();

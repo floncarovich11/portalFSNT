@@ -1,4 +1,5 @@
 import * as tiApi from '../../api/tiApi.js';
+import { getCurrentUserFromToken } from '../../api/authApi.js';
 
 // ===================================
 // CONFIGURAÇÕES E ESTADO GLOBAL
@@ -12,50 +13,33 @@ console.log('📂 Script dashboardTI.js carregado');
 // INICIALIZAÇÃO
 // ===================================
 document.addEventListener('DOMContentLoaded', async () => {
-    // Pegar dados do usuário do localStorage
-    const usuarioJSON = localStorage.getItem('usuario');
-    
-    if (!usuarioJSON) {
+    // Pegar dados do usuário do token
+    const usuarioPayload = getCurrentUserFromToken();
+    if (!usuarioPayload) {
         console.error('Usuário não identificado - redirecionando para login');
         window.location.href = '../login/login.html';
         return;
     }
 
     try {
-        const usuario = JSON.parse(usuarioJSON);
-        
-        // DEBUG: Verificar estrutura do objeto usuario
-        console.log('🔍 Estrutura completa do usuário:', usuario);
-        console.log('🔍 Chaves disponíveis:', Object.keys(usuario));
-        
-        // Tentar diferentes possíveis nomes de campo para o ID
+        const usuario = usuarioPayload;
         idTecnicoLogado = usuario.id_usuario || usuario.id || usuario.idUsuario || usuario.user_id;
-        
+
         if (!idTecnicoLogado) {
-            console.error('❌ ID do técnico não encontrado no objeto usuario');
-            console.error('Objeto recebido:', usuario);
+            console.error('❌ ID do técnico não encontrado no token');
             alert('Erro ao identificar usuário. Por favor, faça login novamente.');
             window.location.href = '../login/login.html';
             return;
         }
-        
-        // Verificar se é realmente um técnico
-        const tipoUsuario = usuario.tipo_usuario || usuario.tipo || usuario.tipoUsuario || usuario.user_type;
-        
+
+        const tipoUsuario = usuario.tipo_usuario || usuario.tipo || usuario.tipoUsuario;
         if (tipoUsuario !== 'TI' && tipoUsuario !== 'Administrador') {
-            console.error('Acesso negado - usuário não é técnico');
-            console.error('Tipo recebido:', tipoUsuario);
             alert('Acesso negado. Você não tem permissão para acessar esta página.');
             window.location.href = '../login/login.html';
             return;
         }
 
-        const nomeUsuario = usuario.nome_completo || usuario.nome || usuario.nomeCompleto || 'Técnico';
-        console.log('✅ Técnico logado:', nomeUsuario);
-        console.log('✅ ID do técnico:', idTecnicoLogado);
-        
         await carregarDashboard();
-        
     } catch (error) {
         console.error('Erro ao processar dados do usuário:', error);
         alert('Erro ao carregar dados do usuário. Por favor, faça login novamente.');

@@ -1,4 +1,5 @@
 import * as tiApi from '../../api/tiApi.js';
+import { getCurrentUserFromToken } from '../../api/authApi.js';
 
 // =====================================================
 // VARIÁVEIS GLOBAIS
@@ -66,35 +67,24 @@ document.addEventListener('DOMContentLoaded', () => {
 // VERIFICAR AUTENTICAÇÃO
 // =====================================================
 function verificarAutenticacao() {
-    const usuarioStorage = localStorage.getItem('usuario');
+    // obter usuário a partir do token (não do localStorage 'usuario')
+    const usuario = getCurrentUserFromToken();
 
-    if (!usuarioStorage) {
-        console.error('❌ Usuário não autenticado');
+    if (!usuario || !usuario.id_usuario) {
+        console.error('❌ Usuário não autenticado via token');
         alert('Você precisa fazer login primeiro!');
         window.location.href = '../login/login.html';
         return;
     }
 
-    try {
-        usuarioLogado = JSON.parse(usuarioStorage);
+    usuarioLogado = usuario; // payload do token
+    console.log('✅ Usuário autenticado (do token):', usuarioLogado);
 
-        // Normalizar id
-        if (usuarioLogado.id && !usuarioLogado.id_usuario) {
-            usuarioLogado.id_usuario = usuarioLogado.id;
-        }
-
-        console.log('✅ Usuário autenticado:', usuarioLogado);
-        console.log('🔑 ID do usuário:', usuarioLogado.id_usuario);
-
-        if (usuarioLogado.tipo_usuario !== 'TI') {
-            alert('Acesso negado! Apenas técnicos de TI podem acessar esta página.');
-            window.location.href = '../login/login.html';
-            return;
-        }
-    } catch (error) {
-        console.error('❌ Erro ao parsear usuário:', error);
-        localStorage.removeItem('usuario');
+    // confirmar permissão TI
+    if (usuarioLogado.tipo_usuario !== 'TI' && usuarioLogado.tipo_usuario !== 'Administrador') {
+        alert('Acesso negado! Apenas técnicos de TI podem acessar esta página.');
         window.location.href = '../login/login.html';
+        return;
     }
 }
 

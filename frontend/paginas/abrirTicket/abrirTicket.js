@@ -1,5 +1,6 @@
 // Caminho correto: sobe 2 níveis (abrirTicket -> paginas -> frontend) e entra em api
 import { criarChamado, buscarTiposSolicitacao, buscarUnidades } from '../../api/ticketsApi.js';
+import { getCurrentUserFromToken } from '../../api/authApi.js';
 
 // Elementos do DOM
 const selectUnidade = document.getElementById('unidade');
@@ -14,23 +15,18 @@ let usuarioLogado = null;
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🔍 Página carregada, verificando localStorage...');
-    console.log('📦 localStorage completo:', localStorage);
-    console.log('👤 Valor bruto do usuario:', localStorage.getItem('usuario'));
+    console.log('🔍 Página carregada, verificando token...');
     
-    // Verificar se o usuário está logado
-    usuarioLogado = obterUsuarioLogado();
-    
-    console.log('🔐 Resultado de obterUsuarioLogado():', usuarioLogado);
-    
-    if (!usuarioLogado) {
+    // Verificar se o usuário está logado apenas via token
+    const usuario = getCurrentUserFromToken();
+    if (!usuario || !usuario.id_usuario) {
         alert('Você precisa estar logado para abrir um ticket!');
         console.error('❌ Redirecionando para login...');
         window.location.href = '/frontend/paginas/login/login.html';
         return;
     }
-
-    console.log('✅ Usuário autenticado com sucesso!');
+    usuarioLogado = usuario;
+    console.log('✅ Usuário autenticado via token:', usuarioLogado);
     
     // Carregar dados dos selects
     await carregarUnidades();
@@ -40,39 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     btnEnviar.addEventListener('click', handleEnviarTicket);
     btnCancelar.addEventListener('click', handleCancelar);
 });
-
-// Função para obter usuário logado do localStorage
-function obterUsuarioLogado() {
-    try {
-        const userData = localStorage.getItem('usuario');
-        
-        if (!userData) {
-            console.error('❌ Nenhum usuário logado encontrado no localStorage');
-            return null;
-        }
-        
-        const usuario = JSON.parse(userData);
-        console.log('✅ Usuário logado:', usuario);
-        
-        // O backend retorna "id" mas precisamos "id_usuario"
-        // Vamos padronizar
-        if (usuario.id && !usuario.id_usuario) {
-            usuario.id_usuario = usuario.id;
-            console.log('🔄 Convertido "id" para "id_usuario":', usuario.id_usuario);
-        }
-        
-        // Validar se tem os campos necessários
-        if (!usuario.id_usuario) {
-            console.error('❌ Usuário não possui id_usuario:', usuario);
-            return null;
-        }
-        
-        return usuario;
-    } catch (error) {
-        console.error('Erro ao obter usuário logado:', error);
-        return null;
-    }
-}
 
 // Carregar unidades do banco de dados
 async function carregarUnidades() {

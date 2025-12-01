@@ -1,84 +1,61 @@
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
-    
-    try {
-        const response = await fetch('http://localhost:3000/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, senha })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            console.log('✅ Login bem-sucedido:', data);
-            
-            // Verificar se o backend retornou os dados do usuário
-            if (data.usuario) {
-                console.log('💾 Salvando usuário no localStorage:', data.usuario);
-                
-                // Salvar no localStorage
-                localStorage.setItem('usuario', JSON.stringify(data.usuario));
-                
-                // VERIFICAR se salvou corretamente
-                const usuarioSalvo = localStorage.getItem('usuario');
-                console.log('✔️ Verificação - Usuário salvo:', usuarioSalvo);
-                
-                if (!usuarioSalvo) {
-                    alert('Erro ao salvar dados do usuário. Tente novamente.');
-                    return;
-                }
-                
-                // ========================================
-                // REDIRECIONAMENTO BASEADO NO TIPO DE USUÁRIO
-                // ========================================
-                const tipoUsuario = data.usuario.tipo_usuario;
-                console.log('🔍 Tipo de usuário:', tipoUsuario);
-                
-                let destino = '';
-                
-                switch(tipoUsuario) {
-                    case 'Administrador':
-                        destino = '../dashboardADM/dashboardADM.html';
-                        console.log('👑 Redirecionando para Dashboard do Administrador');
-                        break;
-                    
-                    case 'TI':
-                        destino = '../dashboardTI/dashboardTI.html';
-                        console.log('💻 Redirecionando para Dashboard de TI');
-                        break;
-                    
-                    case 'Funcionario':
-                        destino = '../abrirTicket/abrirTicket.html';
-                        console.log('👤 Redirecionando para Abrir Ticket (Funcionário)');
-                        break;
-                    
-                    default:
-                        // Se o tipo não for reconhecido, redireciona para uma página padrão
-                        destino = '../abrirTicket/abrirTicket.html';
-                        console.log('⚠️ Tipo de usuário não reconhecido, redirecionando para página padrão');
-                }
-                
-                // Pequeno delay para garantir que salvou
-                setTimeout(() => {
-                    console.log('🔄 Redirecionando para:', destino);
-                    window.location.href = destino;
-                }, 100);
-                
-            } else {
-                console.error('❌ Backend não retornou dados do usuário:', data);
-                alert('Erro: Dados do usuário não foram retornados pelo servidor.');
-            }
-        } else {
-            alert(data.message || 'Erro ao fazer login');
-        }
-    } catch (error) {
-        console.error('💥 Erro:', error);
-        alert('Erro ao conectar com o servidor');
-    }
+document.addEventListener('DOMContentLoaded', async () => {
+	// carregar módulo de autenticação dinamicamente para evitar "import outside module"
+	let authApi;
+	try {
+		authApi = await import('../../api/authApi.js');
+	} catch (err) {
+		console.error('Falha ao carregar authApi:', err);
+		alert('Erro interno: não foi possível carregar recursos de autenticação.');
+		return;
+	}
+
+	const loginForm = document.getElementById('loginForm');
+	if (!loginForm) {
+		console.error('Elemento #loginForm não encontrado no DOM.');
+		return;
+	}
+
+	loginForm.addEventListener('submit', async (e) => {
+		e.preventDefault();
+
+		const emailEl = document.getElementById('email');
+		const senhaEl = document.getElementById('senha');
+
+		if (!emailEl || !senhaEl) {
+			alert('Campos de login não encontrados.');
+			return;
+		}
+
+		const email = emailEl.value;
+		const senha = senhaEl.value;
+
+		try {
+			const data = await authApi.login({ email, senha }); // retorna { token, usuario? }
+
+			if (data && data.token) {
+				// salvar apenas o token
+				localStorage.setItem('token', data.token);
+				// NÃO salvar data.usuario no localStorage para proteger dados do usuário
+
+				// decodificar token para obter tipo e redirecionar
+				const payload = authApi.parseJwt(data.token) || {};
+				const tipoUsuario = payload.tipo_usuario || payload.tipoUsuario || (data.usuario && data.usuario.tipo_usuario) || 'Funcionario';
+
+				let destino = '../abrirTicket/abrirTicket.html';
+				switch(tipoUsuario) {
+					case 'Administrador': destino = '../dashboardADM/dashboardADM.html'; break;
+					case 'TI': destino = '../dashboardTI/dashboardTI.html'; break;
+					case 'Funcionario': destino = '../abrirTicket/abrirTicket.html'; break;
+					default: destino = '../abrirTicket/abrirTicket.html';
+				}
+
+				setTimeout(() => window.location.href = destino, 100);
+			} else {
+				alert('Resposta inválida do servidor ao autenticar.');
+			}
+		} catch (error) {
+			console.error('Erro ao fazer login:', error);
+			alert(error.message || 'Erro ao conectar com o servidor');
+		}
+	});
 });

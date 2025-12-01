@@ -1,5 +1,8 @@
 const db = require('../config/db');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGE_THIS_SECRET';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '8h';
 
 exports.register = (req, res) => {
 	const nome_completo = req.body.nome_completo || req.body.nome;
@@ -103,8 +106,19 @@ exports.login = async (req, res) => {
 				return res.status(401).json({ message: 'Credenciais inválidas.' });
 			}
 
+			// Gerar token JWT com informações mínimas
+			const payload = {
+				id_usuario: usuario.id_usuario,
+				nome_completo: usuario.nome_completo,
+				email: usuario.email,
+				tipo_usuario: usuario.tipo_usuario
+			};
+
+			const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+
 			res.status(200).json({
 				message: 'Login bem-sucedido!',
+				token,
 				usuario: {
 					id: usuario.id_usuario,
 					nome_completo: usuario.nome_completo,

@@ -1,11 +1,13 @@
+import { meusChamados } from '../../api/ticketsApi.js';
+import { getCurrentUserFromToken } from '../../api/authApi.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('📄 Página Meus Tickets carregada.');
 
-    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-    console.log('👤 Usuário logado:', usuario);
+    const usuario = getCurrentUserFromToken();
+    console.log('👤 Usuário (do token):', usuario);
 
-    const idUsuario = usuario.id_usuario || usuario.id;
-
+    const idUsuario = usuario && (usuario.id_usuario || usuario.id);
     if (!idUsuario) {
         alert('Usuário não autenticado. Faça login novamente.');
         window.location.href = '../login/login.html';
@@ -21,14 +23,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         console.log(`🔍 Buscando tickets do usuário ID ${idUsuario}...`);
 
-        const response = await fetch(`http://localhost:3000/tickets/user/${idUsuario}`);
+        const data = await meusChamados(idUsuario); // usa auth headers
 
-        if (!response.ok) {
-            const errData = await response.json();
-            throw new Error(errData.message || 'Erro ao buscar tickets.');
-        }
-
-        const data = await response.json();
         console.log('📦 Tickets recebidos:', data);
 
         const tickets = Array.isArray(data) ? data : data.chamados || [];

@@ -4,6 +4,37 @@
 
 const API_BASE_URL = 'http://localhost:3000';
 
+// helpers JWT
+export function parseJwt(token) {
+	// segura decodificação de base64url
+	if (!token) return null;
+	try {
+		const base64Url = token.split('.')[1];
+		if (!base64Url) return null;
+		const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+		const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+		}).join(''));
+		return JSON.parse(jsonPayload);
+	} catch (e) {
+		console.error('parseJwt error', e);
+		return null;
+	}
+}
+
+export function getCurrentUserFromToken() {
+	const token = localStorage.getItem('token');
+	return parseJwt(token);
+}
+
+export function getAuthHeaders() {
+	const token = localStorage.getItem('token');
+	return {
+		'Content-Type': 'application/json',
+		...(token ? { 'Authorization': 'Bearer ' + token } : {})
+	};
+}
+
 // =====================================================
 // LOGIN
 // =====================================================
@@ -59,7 +90,7 @@ export const getUsuario = async (idUsuario) => {
         
         const res = await fetch(`${API_BASE_URL}/auth/usuario/${idUsuario}`, {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
+            headers: getAuthHeaders()
         });
         
         if (!res.ok) {
@@ -85,7 +116,7 @@ export const updatePerfil = async (idUsuario, dadosAtualizacao) => {
         
         const res = await fetch(`${API_BASE_URL}/auth/perfil/${idUsuario}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dadosAtualizacao)
         });
         

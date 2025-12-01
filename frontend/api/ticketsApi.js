@@ -1,11 +1,19 @@
 const API_URL = 'http://localhost:3000/tickets';
 
+function getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+    };
+}
+
 // Criar chamado
 export const criarChamado = async (dadosChamado) => {
     try {
         const res = await fetch(API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dadosChamado)  
         });
         
@@ -37,7 +45,7 @@ export const listarChamados = async () => {
 // Buscar chamado por ID
 export const buscarChamado = async (id) => {
     try {
-        const res = await fetch(`${API_URL}/${id}`); // ✅ Corrigido
+        const res = await fetch(`${API_URL}/${id}`, { headers: getAuthHeaders() }); // add auth
         if (!res.ok) throw new Error('Erro ao buscar chamado');
         return await res.json();
     } catch (error) {
@@ -49,7 +57,7 @@ export const buscarChamado = async (id) => {
 // Buscar chamados por usuário
 export const meusChamados = async (idUsuario) => {
     try {
-        const res = await fetch(`${API_URL}/user/${idUsuario}`); // ✅ Corrigido
+        const res = await fetch(`${API_URL}/user/${idUsuario}`, { headers: getAuthHeaders() }); // add auth
         if (!res.ok) throw new Error('Erro ao buscar seus chamados');
         return await res.json();
     } catch (error) {
@@ -61,9 +69,9 @@ export const meusChamados = async (idUsuario) => {
 // Atualizar status do chamado
 export const atualizarStatus = async (id, dados) => {
     try {
-        const res = await fetch(`${API_URL}/${id}/status`, { // ✅ Corrigido
+        const res = await fetch(`${API_URL}/${id}/status`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dados)
         });
         if (!res.ok) throw new Error('Erro ao atualizar status');
@@ -77,9 +85,9 @@ export const atualizarStatus = async (id, dados) => {
 // Atribuir técnico
 export const atribuirTecnico = async (id, dados) => {
     try {
-        const res = await fetch(`${API_URL}/${id}/atribuir`, { // ✅ Corrigido
+        const res = await fetch(`${API_URL}/${id}/atribuir`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dados)
         });
         if (!res.ok) throw new Error('Erro ao atribuir técnico');
@@ -121,8 +129,9 @@ export const verHistorico = async (id) => {
 // Deletar chamado
 export const deletarChamado = async (id) => {
     try {
-        const res = await fetch(`${API_URL}/${id}`, { // ✅ Corrigido
-            method: 'DELETE'
+        const res = await fetch(`${API_URL}/${id}`, {
+            method: 'DELETE',
+            headers: getAuthHeaders()
         });
         if (!res.ok) throw new Error('Erro ao deletar chamado');
         return await res.json();
@@ -135,7 +144,7 @@ export const deletarChamado = async (id) => {
 // Buscar tipos de solicitação
 export const buscarTiposSolicitacao = async () => {
     try {
-        const res = await fetch(`${API_URL}/tipos-solicitacao`); // ✅ Corrigido
+        const res = await fetch(`${API_URL}/tipos-solicitacao`, { headers: getAuthHeaders() });
         if (!res.ok) throw new Error('Erro ao buscar tipos de solicitação');
         return await res.json();
     } catch (error) {
@@ -171,9 +180,9 @@ export const listarTecnicos = async () => {
 // Atualizar prioridade do chamado
 export const atualizarPrioridade = async (idChamado, novaPrioridade, idUsuario) => {
     try {
-        const res = await fetch(`${API_URL}/${idChamado}/prioridade`, { // ✅ Corrigido
+        const res = await fetch(`${API_URL}/${idChamado}/prioridade`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify({ 
                 nova_prioridade: novaPrioridade,
                 id_usuario: idUsuario 

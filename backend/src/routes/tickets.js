@@ -15,8 +15,10 @@ const {
     updateTicketPriority  
 } = require('../controllers/ticketsController');
 
-// Criar novo chamado
-router.post('/', createTicket);
+const { verificarToken, verificarAdmin, verificarTI } = require('../middleware/authMiddleware');
+
+// Criar novo chamado (usuários autenticados)
+router.post('/', verificarToken, createTicket);
 
 // Buscar tipos de solicitação (DEVE VIR ANTES DAS ROTAS COM PARÂMETROS)
 router.get('/tipos-solicitacao', (req, res) => {
@@ -29,31 +31,31 @@ router.get('/tipos-solicitacao', (req, res) => {
     });
 });
 
-// Listar técnicos disponíveis
-router.get('/tecnicos', getTechnicians);
+// Listar técnicos disponíveis (apenas usuários autenticados)
+router.get('/tecnicos', verificarToken, getTechnicians);
 
-// Listar todos os chamados
+// Listar todos os chamados (pode ser público/ajustar se desejar) - manter público para dashboard ADM
 router.get('/', getAllTickets);
 
-// Buscar chamados por usuário
-router.get('/user/:id_usuario', getTicketsByUser);
+// Buscar chamados por usuário (apenas o próprio usuário ou admin) - exigir token
+router.get('/user/:id_usuario', verificarToken, getTicketsByUser);
 
-// Atualizar status do chamado
-router.put('/:id/status', updateTicketStatus);
+// Atualizar status do chamado (usuários autenticados)
+router.put('/:id/status', verificarToken, updateTicketStatus);
 
-// Atualizar prioridade do chamado (rota original)
-router.put('/:id_chamado/prioridade', updateTicketPriority);
+// Atualizar prioridade do chamado (rota original) (usuários autenticados)
+router.put('/:id_chamado/prioridade', verificarToken, updateTicketPriority);
 
-// Atribuir técnico ao chamado
-router.put('/:id/atribuir', assignTechnician);
+// Atribuir técnico ao chamado (TI/Admin)
+router.put('/:id/atribuir', verificarToken, verificarTI, assignTechnician);
 
-// Adicionar comentário ao chamado
-router.post('/:id/comment', addComment);
+// Adicionar comentário ao chamado (autenticado)
+router.post('/:id/comment', verificarToken, addComment);
 
-// Buscar histórico do chamado
-router.get('/:id/history', getTicketHistory);
+// Buscar histórico do chamado (autenticado)
+router.get('/:id/history', verificarToken, getTicketHistory);
 
 // Deletar chamado (apenas admin)
-router.delete('/:id', deleteTicket);
+router.delete('/:id', verificarToken, verificarAdmin, deleteTicket);
 
 module.exports = router;

@@ -5,8 +5,7 @@ import {
     atualizarPrioridade,  // ✅ Importar nova função
     deletarChamado 
 } from '../../api/ticketsApi.js';
-
-const CURRENT_USER_ID = 1; // ajuste conforme seu contexto (usuário logado)
+import { getCurrentUserFromToken } from '../../api/authApi.js';
 
 let chamados = []; // cache
 let tecnicos = [];

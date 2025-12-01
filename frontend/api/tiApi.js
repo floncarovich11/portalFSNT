@@ -1,11 +1,19 @@
 const API_URL = 'http://localhost:3000/ti';
 
+function getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+    };
+}
+
 // =====================================================
 // LISTAR CHAMADOS ATRIBUÍDOS AO TÉCNICO
 // =====================================================
 export const listarMeusChamados = async (idTecnico) => {
     try {
-        const res = await fetch(`${API_URL}/chamados/${idTecnico}`);
+        const res = await fetch(`${API_URL}/chamados/${idTecnico}`, { headers: getAuthHeaders() });
         
         if (!res.ok) {
             const errBody = await res.json().catch(() => ({}));
@@ -24,7 +32,7 @@ export const listarMeusChamados = async (idTecnico) => {
 // =====================================================
 export const visualizarChamado = async (idChamado) => {
     try {
-        const res = await fetch(`${API_URL}/chamado/${idChamado}`);
+        const res = await fetch(`${API_URL}/chamado/${idChamado}`, { headers: getAuthHeaders() });
         
         if (!res.ok) {
             const errBody = await res.json().catch(() => ({}));
@@ -45,7 +53,7 @@ export const atualizarChamado = async (idChamado, dados) => {
     try {
         const res = await fetch(`${API_URL}/chamado/${idChamado}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dados)
         });
         
@@ -68,7 +76,7 @@ export const atualizarStatus = async (idChamado, statusChamado, idTecnico) => {
     try {
         const res = await fetch(`${API_URL}/chamado/${idChamado}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify({ 
                 status_chamado: statusChamado,
                 id_tecnico: idTecnico
@@ -94,7 +102,7 @@ export const atualizarObservacoes = async (idChamado, observacoesTecnico, idTecn
     try {
         const res = await fetch(`${API_URL}/chamado/${idChamado}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify({ 
                 observacoes_tecnico: observacoesTecnico,
                 id_tecnico: idTecnico
@@ -129,7 +137,7 @@ export const resolverChamado = async (idChamado, observacoes, idTecnico) => {
         
         const res = await fetch(`${API_URL}/chamado/${idChamado}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dados)
         });
         
@@ -152,7 +160,7 @@ export const iniciarAtendimento = async (idChamado, idTecnico) => {
     try {
         const res = await fetch(`${API_URL}/chamado/${idChamado}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify({ 
                 status_chamado: 'Em Andamento',
                 id_tecnico: idTecnico
@@ -187,7 +195,7 @@ export const aguardarResposta = async (idChamado, observacoes, idTecnico) => {
         
         const res = await fetch(`${API_URL}/chamado/${idChamado}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(dados)
         });
         
